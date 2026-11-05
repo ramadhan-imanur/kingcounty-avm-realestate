@@ -10,20 +10,16 @@ AERIS_CSS = """
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 
 <style>
-/* CSS Variables dari Aeris Spatial Valuation DESIGN.md */
 :root {
     --primary: #006948;
     --primary-container: #00855d;
     --secondary: #006398;
     --surface: #f8f9ff;
-    --surface-card: rgba(255, 255, 255, 0.88);
-    --surface-card-elevated: rgba(255, 255, 255, 0.95);
-    --border-subtle: rgba(226, 232, 240, 0.85);
+    --surface-card: #ffffff;
+    --border-subtle: rgba(226, 232, 240, 0.9);
     --on-surface: #0b1c30;
     --text-secondary: #475569;
     --text-muted: #94A3B8;
-    --tier-entry: #0D9488;
-    --tier-mid: #0284C7;
     --tier-luxury: #7C3AED;
     --shap-pos: #059669;
     --shap-neg: #E11D48;
@@ -31,43 +27,47 @@ AERIS_CSS = """
     --font-mono: 'JetBrains Mono', monospace;
 }
 
-.stApp {
-    background-color: var(--surface);
-    font-family: var(--font-sans);
-    color: var(--on-surface);
+.stApp { background-color: var(--surface) !important; font-family: var(--font-sans) !important; color: var(--on-surface) !important; }
+.block-container { padding-top: 1.5rem !important; padding-bottom: 2.5rem !important; max-width: 1380px !important; }
+
+/* Material Symbols Ligature */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important; font-weight: normal; font-style: normal;
+    font-size: 20px; line-height: 1; display: inline-block; vertical-align: middle; -webkit-font-smoothing: antialiased;
 }
 
-.material-symbols-outlined {
-    font-family: 'Material Symbols Outlined' !important;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 20px;
-    line-height: 1;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-font-smoothing: antialiased;
+/* Fix Labels and Typography Contrast */
+label, label p, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
+    color: #0b1c30 !important; font-weight: 600 !important; font-size: 0.85rem !important; font-family: var(--font-sans) !important;
+}
+[data-testid="stMarkdownContainer"] p, [data-testid="stMarkdownContainer"] span { color: #0b1c30; }
+
+/* Light Inputs & Selectboxes */
+div[data-baseweb="input"], div[data-baseweb="base-input"], div[data-baseweb="select"] > div {
+    background-color: #ffffff !important; border: 1px solid #dce9ff !important; border-radius: 10px !important; color: #0b1c30 !important;
+}
+div[data-baseweb="input"] input, div[data-baseweb="base-input"] input {
+    color: #0b1c30 !important; background-color: #ffffff !important; font-family: var(--font-mono) !important; font-weight: 600 !important;
+}
+button[data-testid="stNumberInputStepDown"], button[data-testid="stNumberInputStepUp"] {
+    background-color: #eff4ff !important; color: #006948 !important; border: 1px solid #dce9ff !important; border-radius: 6px !important;
+}
+
+/* Native Streamlit Form styled as Aeris Card */
+[data-testid="stForm"] {
+    background: #ffffff !important; border: 1px solid var(--border-subtle) !important; border-radius: 16px !important;
+    padding: 24px !important; box-shadow: 0 4px 20px -2px rgba(11, 28, 48, 0.04) !important;
 }
 
 /* Glassmorphism Cards */
 .aeris-card {
-    background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 20px -2px rgba(11, 28, 48, 0.04);
+    background: #ffffff; border: 1px solid var(--border-subtle); border-radius: 16px;
+    padding: 22px; margin-bottom: 18px; box-shadow: 0 4px 20px -2px rgba(11, 28, 48, 0.04);
 }
-
 .aeris-card-hero {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,246,255,0.92) 100%);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 105, 72, 0.15);
-    border-radius: 20px;
-    padding: 28px;
-    margin-bottom: 24px;
-    box-shadow: 0 10px 30px -5px rgba(0, 105, 72, 0.08);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7f4 100%);
+    border: 1px solid rgba(0, 105, 72, 0.18); border-radius: 18px;
+    padding: 24px; margin-bottom: 18px; box-shadow: 0 8px 24px -4px rgba(0, 105, 72, 0.08);
 }
 
 /* Badges & Metrics */
@@ -82,99 +82,54 @@ AERIS_CSS = """
 .badge-luxury { background: #f3e8ff; color: #6b21a8; }
 
 .aeris-val-hero {
-    font-family: var(--font-mono); font-size: 2.8rem; font-weight: 700;
-    color: var(--on-surface); letter-spacing: -0.03em; line-height: 1.1; margin: 8px 0;
+    font-family: var(--font-mono); font-size: 2.6rem; font-weight: 800;
+    color: #0b1c30; letter-spacing: -0.03em; line-height: 1.1; margin: 6px 0;
 }
-.aeris-val-idr { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 600; color: var(--primary); }
+.aeris-val-idr { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; color: var(--primary); }
 
 /* SHAP Breakdown Items */
 .shap-item {
-    display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
-    border-radius: 10px; background: rgba(248, 250, 252, 0.8); border: 1px solid rgba(226, 232, 240, 0.6);
-    margin-bottom: 8px; font-size: 0.875rem;
+    display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;
+    border-radius: 8px; background: #f8faff; border: 1px solid #e2e8f0; margin-bottom: 6px; font-size: 0.85rem;
 }
 .shap-val-pos { font-family: var(--font-mono); font-weight: 700; color: var(--shap-pos); }
 .shap-val-neg { font-family: var(--font-mono); font-weight: 700; color: var(--shap-neg); }
 
-/* Buttons & Inputs */
+/* Buttons */
 div.stButton > button:first-child {
     background-color: var(--primary) !important; color: #ffffff !important;
-    font-family: var(--font-sans) !important; font-weight: 600 !important; border-radius: 12px !important;
+    font-family: var(--font-sans) !important; font-weight: 700 !important; border-radius: 12px !important;
     border: none !important; padding: 12px 24px !important; box-shadow: 0 4px 14px rgba(0, 105, 72, 0.25) !important;
     transition: all 0.2s ease !important;
 }
 div.stButton > button:first-child:hover {
     background-color: var(--primary-container) !important; transform: translateY(-1px) !important;
-    box-shadow: 0 6px 20px rgba(0, 105, 72, 0.35) !important;
 }
 
-/* Custom Sidebar & Stitch Nav Pills */
+/* Custom Sidebar Navigation (Stitch Pills) */
 section[data-testid="stSidebar"] {
-    background: rgba(255, 255, 255, 0.85) !important;
-    backdrop-filter: blur(20px) !important;
-    border-right: 1px solid var(--border-subtle) !important;
+    background: #ffffff !important; border-right: 1px solid #e2e8f0 !important;
 }
-section[data-testid="stSidebar"] div[role="radiogroup"] {
-    gap: 4px;
+[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
+    display: flex; flex-direction: column; gap: 4px;
 }
-section[data-testid="stSidebar"] div[role="radiogroup"] > label {
-    background: transparent;
-    padding: 8px 12px !important;
-    border-radius: 12px !important;
-    transition: all 0.15s ease-in-out !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
+[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    background: #f8faff !important; border: 1px solid #eef2f6 !important;
+    padding: 8px 12px !important; border-radius: 10px !important;
+    cursor: pointer !important; display: flex !important; align-items: center !important; margin: 0 !important;
 }
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:hover {
-    background: rgba(0, 105, 72, 0.06) !important;
+[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+    background: #eff4ff !important; border-color: #00855d !important;
 }
-section[data-testid="stSidebar"] div[role="radiogroup"] > label[data-checked="true"],
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checked) {
-    background: #00855d !important;
-    box-shadow: 0 2px 10px rgba(0, 105, 72, 0.2) !important;
+[data-testid="stSidebar"] [data-testid="stRadio"] label p {
+    color: #0b1c30 !important; font-size: 0.825rem !important; font-weight: 600 !important; margin: 0 !important;
 }
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checked) p {
+[data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child { display: none !important; }
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
+    background: #006948 !important; border-color: #006948 !important;
+}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p {
     color: #ffffff !important;
-    font-weight: 600 !important;
-}
-section[data-testid="stSidebar"] div[role="radiogroup"] > label > div:first-child {
-    display: none !important;
-}
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(1) p::before {
-    font-family: 'Material Symbols Outlined' !important;
-    content: "calculate";
-    margin-right: 8px;
-    font-size: 18px;
-    vertical-align: middle;
-}
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(2) p::before {
-    font-family: 'Material Symbols Outlined' !important;
-    content: "explore";
-    margin-right: 8px;
-    font-size: 18px;
-    vertical-align: middle;
-}
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(3) p::before {
-    font-family: 'Material Symbols Outlined' !important;
-    content: "insights";
-    margin-right: 8px;
-    font-size: 18px;
-    vertical-align: middle;
-}
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(4) p::before {
-    font-family: 'Material Symbols Outlined' !important;
-    content: "real_estate_agent";
-    margin-right: 8px;
-    font-size: 18px;
-    vertical-align: middle;
-}
-section[data-testid="stSidebar"] div[role="radiogroup"] > label:nth-child(5) p::before {
-    font-family: 'Material Symbols Outlined' !important;
-    content: "verified_user";
-    margin-right: 8px;
-    font-size: 18px;
-    vertical-align: middle;
 }
 
 header[data-testid="stHeader"] { background: transparent !important; }

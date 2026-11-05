@@ -80,15 +80,15 @@ st.sidebar.markdown(
             Trained on <b>22,847 King County parcels</b> with validated spatial metrics.
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-            <span>Core Regressor:</span>
+            <span style="color:#475569;">Core Regressor:</span>
             <span style="font-family:'JetBrains Mono'; font-weight:700; color:#006948;">LightGBM / HGB</span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-            <span>Test R² Score:</span>
+            <span style="color:#475569;">Test R² Score:</span>
             <span style="font-family:'JetBrains Mono'; font-weight:700; color:#006948;">0.8848</span>
         </div>
         <div style="display:flex; justify-content:space-between;">
-            <span>Test MAPE:</span>
+            <span style="color:#475569;">Test MAPE:</span>
             <span style="font-family:'JetBrains Mono'; font-weight:700; color:#006948;">13.39%</span>
         </div>
     </div>
