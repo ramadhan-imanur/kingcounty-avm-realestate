@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-container":"#00476e","on-surface-variant":"#3d4a42","on-error":"#ffffff","map-choropleth-mid":"#38BDF8","map-choropleth-high":"#0369A1","glass-canvas":"rgba(248, 250, 252, 0.72)","inverse-primary":"#68dba9","surface-container-low":"#eff4ff","tertiary-fixed":"#e1e0ff","inverse-on-surface":"#eaf1ff","on-secondary-fixed":"#001d31","error-container":"#ffdad6","surface-tint":"#006c4a","map-choropleth-low":"#E0F2FE","tertiary":"#4648d4","error":"#ba1a1a","surface-container-lowest":"#ffffff","glass-surface-elevated":"rgba(255, 255, 255, 0.90)","tertiary-container":"#6063ee","glass-border-subtle":"rgba(226, 232, 240, 0.80)","on-tertiary-fixed":"#07006c","tertiary-fixed-dim":"#c0c1ff","on-primary-fixed-variant":"#005137","primary-fixed":"#85f8c4","on-primary-container":"#f5fff7","surface":"#f8f9ff","primary-container":"#00855d","surface-dim":"#cbdbf5","on-primary-fixed":"#002114","shap-positive":"#059669","on-background":"#0b1c30","secondary-container":"#5bb8fe","text-secondary":"#475569","on-primary":"#ffffff","outline-variant":"#bccac0","on-surface":"#0b1c30","secondary-fixed-dim":"#93ccff","inverse-surface":"#213145","on-secondary-fixed-variant":"#004b73","surface-bright":"#f8f9ff","surface-container":"#e5eeff","text-primary":"#0F172A","tier-luxury":"#7C3AED","surface-container-high":"#dce9ff","surface-variant":"#d3e4fe","tier-entry":"#0D9488","glass-surface":"rgba(255, 255, 255, 0.78)","shap-negative":"#E11D48","on-tertiary-container":"#fffbff","tier-mid":"#0284C7","text-muted":"#94A3B8","outline":"#6d7a72","primary":"#006948","background":"#f8f9ff","on-error-container":"#93000a","primary-fixed-dim":"#68dba9","on-tertiary":"#ffffff","surface-container-highest":"#d3e4fe","on-secondary":"#ffffff","glass-border":"rgba(255, 255, 255, 0.65)","on-tertiary-fixed-variant":"#2f2ebe","secondary":"#006398","secondary-fixed":"#cce5ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin-desktop":"2rem","margin":"1rem","space-xl":"2rem","gutter-desktop":"1.5rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","gutter":"1.25rem","space-xs":"0.25rem"},fontFamily:{"body-md":["Plus Jakarta Sans"],"label-lg":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"kpi-metric":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"label-mono":["JetBrains Mono"],"headline-xl":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"]},fontSize:{"body-md":["0.875rem",{"lineHeight":"1.375rem","fontWeight":"400"}],"label-lg":["0.875rem",{"lineHeight":"1.25rem","fontWeight":"600"}],"headline-xl-mobile":["1.75rem",{"lineHeight":"2.25rem","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["0.75rem",{"lineHeight":"1rem","fontWeight":"500"}],"body-lg":["1rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"headline-md":["1.25rem",{"lineHeight":"1.75rem","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-lg":["1.75rem",{"lineHeight":"2.25rem","letterSpacing":"-0.02em","fontWeight":"600"}],"kpi-metric":["2rem",{"lineHeight":"2.25rem","letterSpacing":"-0.03em","fontWeight":"700"}],"headline-sm":["1.125rem",{"lineHeight":"1.5rem","fontWeight":"600"}],"label-mono":["0.8125rem",{"lineHeight":"1.125rem","letterSpacing":"-0.01em","fontWeight":"500"}],"headline-xl":["2.25rem",{"lineHeight":"2.75rem","letterSpacing":"-0.025em","fontWeight":"700"}],"body-sm":["0.75rem",{"lineHeight":"1.125rem","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-glass-surface backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-20 flex items-center px-space-lg gap-space-sm bg-surface/40"><img alt="KingCounty-AVM Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WcJeWtX9t2yunwMkxzpAaqC7EXnn8Hc-p_ZyhvWzTxsN9w6G-FplzQdtWkbmXJQBCdFDFw33GBT8NsTYxXjyu-bw8GjXnZBK3ypsUUq8aHEB7IVA6nnqsixQyU0y5RolHWHYyuJ0Nx5ZqBOP9N3Sib6eKcWzFSdh_Yvt9Wo0CCRme2_yKDXslwWQIMlrgSerc7uOTwTAKQVEquyzel6N8TxIWl0Hjo17Uwhm3GeWc"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface leading-none">KingCounty-AVM</span><span class="font-label-md text-label-md text-on-surface-variant font-medium tracking-tight mt-1">UNS Data Science Team 6</span></div></div><div class="px-space-md py-space-sm"><div class="bg-surface-container/60 rounded-xl p-space-sm flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-shap-positive animate-pulse"></span><span class="font-label-mono text-label-mono text-on-surface font-semibold">LightGBM Core</span></div><span class="font-label-mono text-label-mono bg-primary-fixed text-on-primary-fixed px-space-xs py-0.5 rounded-full font-bold">R² 0.8848</span></div></div><nav class="flex flex-col gap-space-xs px-space-md mt-space-sm" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl transition-all bg-primary-container text-on-primary-container font-semibold shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-path="overview-&amp;-spatial-explorer" href="#"><span class="material-symbols-outlined text-space-lg">explore</span><span>Overview &amp; Spatial Explorer</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-lg text-label-lg" data-path="smart-avm-valuator" href="#"><span class="material-symbols-outlined text-space-lg">calculate</span><span>Smart AVM Valuator</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-lg text-label-lg" data-path="shap-xai-decomposition" href="#"><span class="material-symbols-outlined text-space-lg">insights</span><span>SHAP XAI Decomposition</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-lg text-label-lg" data-path="renovation-roi-simulator" href="#"><span class="material-symbols-outlined text-space-lg">real_estate_agent</span><span>Renovation ROI Simulator</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-lg text-label-lg" data-path="model-health-&amp;-documentation" href="#"><span class="material-symbols-outlined text-space-lg">verified_user</span><span>Model Health &amp; Docs</span></a></nav></div><div class="p-space-md bg-surface-container-low/70 m-space-md rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center justify-between mb-space-xs"><span class="font-label-md text-label-md text-on-surface-variant">Data Baseline</span><span class="font-label-mono text-label-mono text-secondary font-semibold">v2.4 Production</span></div><p class="font-body-sm text-body-sm text-text-secondary">Trained on 21.6K King County parcels with validated geospatial metrics.</p></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-20 bg-glass-surface backdrop-blur-xl z-40 flex items-center justify-between px-space-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-lg flex-1 max-w-2xl"><div class="relative w-full"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-space-lg">search</span><input class="w-full pl-11 pr-space-md py-space-sm rounded-xl bg-surface-container-lowest/80 text-on-surface font-body-md text-body-md placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary shadow-[0_1px_8px_rgba(0,0,0,0.04)]" placeholder="Search King County ZipCode, e.g. 98004 Bellevue, 98101 Seattle..." type="text"/></div></div><div class="flex items-center gap-space-lg"><div class="hidden 2xl:flex items-center gap-space-md bg-surface-container-low/80 px-space-md py-space-xs rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface-variant">Median Val</span><span class="font-label-mono text-label-mono text-on-surface font-bold">$450,000</span></div><div class="h-6 w-px bg-outline-variant/40"></div><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface-variant">Total Parcels</span><span class="font-label-mono text-label-mono text-on-surface font-bold">22,847</span></div><div class="h-6 w-px bg-outline-variant/40"></div><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface-variant">Test MAPE</span><span class="font-label-mono text-label-mono text-shap-positive font-bold">11.4%</span></div></div><div class="flex items-center gap-space-sm"><button aria-label="Notifications" class="p-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors relative shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><span class="material-symbols-outlined">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Spatial Layer Mode" class="p-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><span class="material-symbols-outlined">layers</span></button></div><div class="h-8 w-px bg-outline-variant/40 hidden sm:block"></div><div class="flex items-center gap-space-sm pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_1px_8px_rgba(0,0,0,0.04)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSaxl7FWErKq0M2IzeYA1UHHkaohroEMNfF9ZxMMQoSkc8uoDEQzSldyLLSIB5oFkWoZirtIe0vc0RuH-3yRV8oFdhHJN26MCnJmwWO2BX5hGtWDZZ99a0HRAjchp7mZOoFzsaRBMXUPibKlfnrk0tdATKqG4VHe7IIPAYwgwnphJo7qStSOEQJofpCyMw8nCSpYT38Ns3HBkootZ5M65YD6Pg96NIS2UU9U6hKQ"/><div class="flex flex-col text-left"><span class="font-label-lg text-label-lg text-on-surface leading-tight font-semibold">Alysia P.</span><span class="font-label-md text-label-md text-on-surface-variant leading-tight">Real Estate Analyst</span></div></div></div></header><main class="w-full pt-20 px-space-xl bg-background"><div class="flex flex-col w-full pb-space-xl">
+<!-- Ambient Gradient Light Accent (Contained) -->
+<div class="relative w-full">
+<div class="absolute -top-10 left-1/4 w-96 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-20 right-1/3 w-80 h-40 bg-secondary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+</div>
+<!-- Header Greeting & Production Status Banner -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-wider font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span>Geospatial Intelligence Engine • King County, WA</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">
+        Good afternoon, Analyst <span class="text-primary font-normal">🌲</span>
+</h1>
+<p class="font-body-md text-body-md text-text-secondary">
+        LightGBM production pipeline is calibrated against 22,847 King County tax assessor parcels.
+      </p>
+</div>
+<!-- Active Engine Status Pill & Timestamp -->
+<div class="flex items-center gap-space-sm bg-surface-container-lowest/90 backdrop-blur-md px-space-md py-space-sm rounded-xl shadow-sm self-start md:self-auto">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-space-lg">database</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-label-mono text-on-surface font-semibold">Harvard Dataverse v2.4</span>
+<span class="w-1.5 h-1.5 rounded-full bg-shap-positive"></span>
+</div>
+<span class="font-body-sm text-body-sm text-text-muted">Last sync: 14 mins ago • 30 features active</span>
+</div>
+<button class="ml-space-sm p-space-xs text-text-muted hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-space-md">sync</span>
+</button>
+</div>
+</div>
+<!-- Top 5 KPI Banner Cards (Glassmorphism + Sparklines) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md mb-space-lg">
+<!-- KPI 1: Transactions -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-text-secondary uppercase">Transactions</span>
+<span class="font-label-mono text-body-sm text-shap-positive bg-surface-container px-space-xs py-0.5 rounded">All-Time</span>
+</div>
+<div class="my-space-xs">
+<div class="font-kpi-metric text-kpi-metric text-on-surface font-bold">22,847</div>
+<div class="font-body-sm text-body-sm text-text-muted">Assessed 147 → 30 attributes</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between">
+<svg class="w-24 h-5 text-primary" fill="none" viewbox="0 0 100 20">
+<path d="M0 16 L20 14 L40 17 L60 8 L80 10 L100 3" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+<span class="font-label-mono text-body-sm text-text-secondary font-medium">99.2% valid</span>
+</div>
+</div>
+<!-- KPI 2: Median Price -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-text-secondary uppercase">Median Price</span>
+<span class="font-label-mono text-body-sm text-shap-positive bg-surface-container px-space-xs py-0.5 rounded flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs">trending_up</span> +8.4% YoY
+        </span>
+</div>
+<div class="my-space-xs">
+<div class="font-kpi-metric text-kpi-metric text-on-surface font-bold">$450,000</div>
+<div class="font-body-sm text-body-sm text-text-muted">King County residential</div>
+</div>
+<div class="pt-space-xs">
+<!-- CI Strip -->
+<div class="w-full bg-surface-container rounded-full h-1.5 relative overflow-hidden">
+<div class="absolute left-1/4 right-1/4 h-full bg-secondary-container rounded-full"></div>
+<div class="absolute left-1/2 w-1.5 h-full bg-primary rounded-full -translate-x-1/2"></div>
+</div>
+<div class="flex justify-between font-label-mono text-body-sm text-text-muted mt-1">
+<span>P10: $280k</span>
+<span>P90: $1.15M</span>
+</div>
+</div>
+</div>
+<!-- KPI 3: Model Performance -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-text-secondary uppercase">Model Accuracy</span>
+<span class="font-label-mono text-body-sm text-secondary bg-surface-container px-space-xs py-0.5 rounded">LightGBM</span>
+</div>
+<div class="my-space-xs">
+<div class="font-headline-lg text-headline-lg text-on-surface font-bold">R² 0.8848</div>
+<div class="font-body-sm text-body-sm text-shap-positive font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-sm">verified</span> Test MAPE: 11.4%
+        </div>
+</div>
+<div class="pt-space-xs flex items-center gap-1 text-text-muted font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm text-primary">speed</span>
+<span>Latency: 4.2ms / infer</span>
+</div>
+</div>
+<!-- KPI 4: Tier Distribution -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-text-secondary uppercase">Tier Macro F1</span>
+<span class="font-label-mono text-body-sm text-tier-luxury bg-surface-container px-space-xs py-0.5 rounded">87.8% F1</span>
+</div>
+<div class="my-space-xs">
+<div class="flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md font-bold text-tier-entry">32%</span>
+<span class="text-text-muted text-xs">/</span>
+<span class="font-headline-md text-headline-md font-bold text-tier-mid">48%</span>
+<span class="text-text-muted text-xs">/</span>
+<span class="font-headline-md text-headline-md font-bold text-tier-luxury">20%</span>
+</div>
+<div class="font-body-sm text-body-sm text-text-muted">Entry • Mid • Luxury</div>
+</div>
+<div class="pt-space-xs">
+<div class="w-full flex h-1.5 rounded-full overflow-hidden bg-surface-container">
+<div class="bg-tier-entry h-full" style="width: 32%"></div>
+<div class="bg-tier-mid h-full" style="width: 48%"></div>
+<div class="bg-tier-luxury h-full" style="width: 20%"></div>
+</div>
+</div>
+</div>
+<!-- KPI 5: Avg Price / SqFt -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-text-secondary uppercase">Price Density</span>
+<span class="font-label-mono text-body-sm text-on-surface-variant bg-surface-container px-space-xs py-0.5 rounded">Sq.Ft Basis</span>
+</div>
+<div class="my-space-xs">
+<div class="font-kpi-metric text-kpi-metric text-on-surface font-bold">$284</div>
+<div class="font-body-sm text-body-sm text-text-muted">Range: $140 – $920/sqft</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between text-text-muted font-body-sm text-body-sm">
+<span>Bellevue: $542</span>
+<span class="font-label-mono text-body-sm text-shap-positive">+6.1%</span>
+</div>
+</div>
+</div>
+<!-- Main Tripartite Split Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg mb-space-lg">
+<!-- LEFT: 60% Interactive King County Spatial GIS Map & Filter Bar (Cols 1 to 7) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<!-- Interactive Spatial Filter Controller Deck -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-space-lg">tune</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Spatial Parcel Query Controller</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-body-sm text-text-muted">Viewing:</span>
+<span class="font-label-mono text-body-sm text-on-surface font-semibold bg-surface-container px-2 py-0.5 rounded-full">4,819 Parcels Selected</span>
+</div>
+</div>
+<!-- Filter Controls Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-space-sm pt-space-xs">
+<!-- District Selector -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-text-secondary">ZipCode Cluster</label>
+<div class="relative">
+<select class="w-full bg-surface-container text-on-surface font-body-md text-body-md py-1.5 px-space-sm rounded-lg appearance-none cursor-pointer focus:outline-none" id="districtFilter">
+<option value="all">All King County (70 Zips)</option>
+<option value="seattle">Seattle (98101-98199)</option>
+<option selected="" value="bellevue">Bellevue (98004, 98005)</option>
+<option value="redmond">Redmond (98052)</option>
+<option value="kirkland">Kirkland (98033)</option>
+<option value="mercer">Mercer Island (98040)</option>
+<option value="federalway">Federal Way (98003)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2 pointer-events-none text-text-muted text-sm">expand_more</span>
+</div>
+</div>
+<!-- Price Range Slider -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-text-secondary">Cap Price</label>
+<span class="font-label-mono text-body-sm text-on-surface font-semibold" id="priceVal">$2.50M</span>
+</div>
+<input class="w-full accent-primary h-1.5 bg-surface-container rounded-lg cursor-pointer" id="priceSlider" max="2500000" min="200000" step="50000" type="range" value="2500000"/>
+</div>
+<!-- Construction Grade -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-text-secondary">Grade Standard</label>
+<span class="font-label-mono text-body-sm text-on-surface font-semibold" id="gradeVal">Grade 7-13</span>
+</div>
+<input class="w-full accent-secondary h-1.5 bg-surface-container rounded-lg cursor-pointer" id="gradeSlider" max="13" min="1" step="1" type="range" value="7"/>
+</div>
+<!-- Waterfront Toggle -->
+<div class="flex flex-col gap-1 justify-end">
+<label class="font-label-md text-label-md text-text-secondary">Shoreline Status</label>
+<button class="flex items-center justify-between bg-surface-container px-space-sm py-1.5 rounded-lg text-on-surface font-body-md text-body-md hover:bg-surface-container-high transition-colors" id="waterfrontBtn">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-sm">water</span>
+<span id="waterfrontLabel">Waterfront: All</span>
+</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+</div>
+</div>
+</div>
+<!-- High Precision Interactive Map Container -->
+<div class="relative bg-surface-container-lowest/80 backdrop-blur-md rounded-xl shadow-sm overflow-hidden flex flex-col min-h-[480px]">
+<!-- Top Map Header Bar -->
+<div class="absolute top-space-md left-space-md z-20 flex items-center gap-space-sm bg-surface-container-lowest/90 backdrop-blur-md px-space-md py-space-xs rounded-xl shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-shap-positive animate-pulse"></span>
+<span class="font-label-mono text-body-sm text-on-surface font-semibold">Puget Sound GIS Projection (EPSG:2926)</span>
+</div>
+<!-- Zoom Controls Overlay -->
+<div class="absolute top-space-md right-space-md z-20 flex flex-col gap-1 bg-surface-container-lowest/90 backdrop-blur-md p-1 rounded-lg shadow-sm">
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container rounded text-on-surface transition-colors" title="Zoom In">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container rounded text-on-surface transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container rounded text-on-surface transition-colors" title="Center King County">
+<span class="material-symbols-outlined text-sm">my_location</span>
+</button>
+</div>
+<!-- Map Canvas Visual / Cartographic Layer -->
+<div class="relative w-full h-[480px] bg-surface-container overflow-hidden select-none">
+<!-- Stylized Geographic Contours & Water Bodies -->
+<svg class="absolute inset-0 w-full h-full text-map-choropleth-mid/20" fill="none" preserveaspectratio="xMidYMid slice" viewbox="0 0 800 500">
+<!-- Puget Sound Water Contour (Left) -->
+<path d="M 0 0 L 140 0 C 160 80 120 140 170 220 C 190 250 140 320 160 400 C 170 450 130 500 130 500 L 0 500 Z" fill="#E0F2FE"></path>
+<!-- Lake Washington Contour (Center) -->
+<path d="M 330 60 C 370 120 340 180 365 240 C 380 280 340 340 330 380 C 310 320 315 250 300 200 C 290 140 310 90 330 60 Z" fill="#E0F2FE"></path>
+<!-- Lake Sammamish Contour (Right) -->
+<path d="M 520 160 C 535 210 525 270 540 320 C 520 280 510 230 520 160 Z" fill="#E0F2FE"></path>
+<!-- Highway Overlay Lines -->
+<path d="M 230 0 L 250 500" stroke="#CBD5E1" stroke-dasharray="4 4" stroke-width="2"></path> <!-- I-5 -->
+<path d="M 440 0 L 430 500" stroke="#CBD5E1" stroke-dasharray="4 4" stroke-width="2"></path> <!-- I-405 -->
+<path d="M 120 220 L 700 240" stroke="#CBD5E1" stroke-width="2"></path> <!-- I-90 / SR-520 -->
+</svg>
+<!-- Geographic Labels -->
+<span class="absolute top-16 left-8 font-label-mono text-body-sm text-secondary uppercase tracking-widest font-semibold opacity-60">Puget Sound</span>
+<span class="absolute top-48 left-72 font-label-mono text-body-sm text-secondary font-semibold opacity-60">Lake Washington</span>
+<span class="absolute top-28 left-48 font-label-lg text-label-lg text-text-secondary font-bold">Seattle</span>
+<span class="absolute top-40 left-96 font-label-lg text-label-lg text-text-secondary font-bold">Bellevue</span>
+<span class="absolute top-20 right-48 font-label-lg text-label-lg text-text-secondary font-bold">Redmond</span>
+<span class="absolute bottom-28 left-80 font-label-lg text-label-lg text-text-secondary font-bold">Renton</span>
+<!-- Geo-located Valuation Parcels (Cluster points) -->
+<!-- Luxury Tier Points (> $700k) -->
+<div class="absolute top-36 left-[390px] w-3.5 h-3.5 rounded-full bg-tier-luxury ring-4 ring-tier-luxury/20 cursor-pointer hover:scale-150 transition-transform shadow-md" title="Bellevue Downtown - $1,420,000"></div>
+<div class="absolute top-44 left-[410px] w-3 h-3 rounded-full bg-tier-luxury cursor-pointer hover:scale-150 transition-transform" title="Bellevue Meydenbauer - $1,890,000"></div>
+<div class="absolute top-52 left-[360px] w-3.5 h-3.5 rounded-full bg-tier-luxury cursor-pointer hover:scale-150 transition-transform" title="Mercer Island North - $2,250,000"></div>
+<div class="absolute top-28 left-[480px] w-3 h-3 rounded-full bg-tier-luxury cursor-pointer hover:scale-150 transition-transform" title="Redmond Marymoor - $980,000"></div>
+<div class="absolute top-20 left-[380px] w-3 h-3 rounded-full bg-tier-luxury cursor-pointer hover:scale-150 transition-transform" title="Kirkland Waterfront - $1,650,000"></div>
+<!-- Mid Tier Points ($350k - $700k) -->
+<div class="absolute top-24 left-44 w-2.5 h-2.5 rounded-full bg-tier-mid cursor-pointer hover:scale-150 transition-transform" title="Seattle Ballard - $620,000"></div>
+<div class="absolute top-36 left-48 w-2.5 h-2.5 rounded-full bg-tier-mid cursor-pointer hover:scale-150 transition-transform" title="Seattle Capitol Hill - $685,000"></div>
+<div class="absolute top-48 left-56 w-2.5 h-2.5 rounded-full bg-tier-mid cursor-pointer hover:scale-150 transition-transform" title="West Seattle - $540,000"></div>
+<div class="absolute top-64 left-[420px] w-2.5 h-2.5 rounded-full bg-tier-mid cursor-pointer hover:scale-150 transition-transform" title="Newcastle - $580,000"></div>
+<div class="absolute top-32 left-[490px] w-2.5 h-2.5 rounded-full bg-tier-mid cursor-pointer hover:scale-150 transition-transform" title="Redmond Tech Hub - $640,000"></div>
+<div class="absolute bottom-36 left-[380px] w-2.5 h-2.5 rounded-full bg-tier-mid cursor-pointer hover:scale-150 transition-transform" title="Renton Highlands - $495,000"></div>
+<!-- Entry Tier Points (< $350k) -->
+<div class="absolute bottom-20 left-48 w-2 h-2 rounded-full bg-tier-entry cursor-pointer hover:scale-150 transition-transform" title="Kent Valley - $310,000"></div>
+<div class="absolute bottom-14 left-56 w-2 h-2 rounded-full bg-tier-entry cursor-pointer hover:scale-150 transition-transform" title="Auburn - $285,000"></div>
+<div class="absolute bottom-10 left-36 w-2 h-2 rounded-full bg-tier-entry cursor-pointer hover:scale-150 transition-transform" title="Federal Way - $325,000"></div>
+<div class="absolute top-12 left-52 w-2 h-2 rounded-full bg-tier-entry cursor-pointer hover:scale-150 transition-transform" title="Shoreline North - $340,000"></div>
+<!-- Active Selected Inspection Tooltip Card (Pinned over Bellevue 98004) -->
+<div class="absolute top-32 left-[415px] z-30 w-64 bg-surface-container-lowest/95 backdrop-blur-xl p-space-sm rounded-xl shadow-xl flex flex-col gap-1 pointer-events-auto">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-body-sm text-tier-luxury font-bold bg-surface-container px-1.5 py-0.5 rounded">Zip: 98004</span>
+<span class="font-label-mono text-body-sm text-shap-positive font-bold">R² 0.912</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-bold leading-tight">Bellevue Metro East</div>
+<div class="flex items-center justify-between text-body-sm text-body-sm text-text-secondary">
+<span>Median Sale:</span>
+<span class="font-label-mono text-on-surface font-bold">$1,280,000</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-body-sm text-text-secondary">
+<span>Sample Density:</span>
+<span class="font-label-mono text-on-surface">312 sales</span>
+</div>
+<div class="flex items-center justify-between text-body-sm text-body-sm text-text-secondary">
+<span>Avg Price/SqFt:</span>
+<span class="font-label-mono text-primary font-bold">$612 / sqft</span>
+</div>
+<div class="mt-1 pt-1 bg-surface-container/50 rounded p-1 flex items-center gap-1 text-[11px] text-text-muted">
+<span class="material-symbols-outlined text-xs text-shap-positive">check_circle</span>
+<span>Model Confidence: High (±4.1%)</span>
+</div>
+</div>
+<!-- Bottom Floating Map Legend Pill -->
+<div class="absolute bottom-space-md left-1/2 -translate-x-1/2 z-20 bg-surface-container-lowest/90 backdrop-blur-md px-space-md py-space-xs rounded-full shadow-md flex items-center gap-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-tier-entry"></span>
+<span class="font-label-md text-label-md text-on-surface">Entry &lt;$350k</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-tier-mid"></span>
+<span class="font-label-md text-label-md text-on-surface">Mid $350k-$700k</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-tier-luxury"></span>
+<span class="font-label-md text-label-md text-on-surface">Luxury &gt;$700k</span>
+</div>
+</div>
+</div>
+<!-- Quick Spatial Metrics Strip -->
+<div class="p-space-sm bg-surface-container-lowest flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-text-secondary">
+<span class="material-symbols-outlined text-space-md text-primary">location_on</span>
+<span>Focus Area: <b class="text-on-surface">Lake Washington Corridor &amp; Eastside Submarkets</b></span>
+</div>
+<div class="flex items-center gap-space-md font-label-mono text-body-sm">
+<span class="text-text-muted">Spatial Autocorr (Moran's I): <b class="text-on-surface">0.684</b></span>
+<span class="text-text-muted">ZipCode Clustered SE: <b class="text-shap-positive">0.012</b></span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT: 40% Econometric Price Analytics & View Premium Index (Cols 8 to 12) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Econometric Card: Visual Graphic Asset from Design System -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-space-lg">analytics</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Econometric Log-Normal Valuation Distribution</span>
+</div>
+<span class="font-label-mono text-body-sm text-primary font-bold bg-surface-container px-2 py-0.5 rounded">ln(Price) Fit</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-sm">
+          Skewness reduced from 3.28 to 0.14 via natural log transform for residual normality.
+        </p>
+<!-- Graphic Asset Container -->
+<div class="relative w-full rounded-lg overflow-hidden bg-surface-container flex items-center justify-center">
+<img alt="King County Econometric Price Distribution and Spatial Clustering" class="w-full h-44 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClFASqItToWUssEsEdtKNxG1n-JsdQ_oP3B921wyoX6rrNQWgNKxnBOnnMQSq6Lvw0djsb2JepO3fGIODmZN3jiBQCMBZwBvXQR6_vTlLMP4MVm_KdHJcwrN9tb0jYClciZvJQCEJVRkDvtulHUeKpe_SGhEG4ktOyIg5vjGTt2uwscpV6lBuq1wVGhjkzhZ9UpNJmu84buA51A6f69NEj1acQNI8dhR_c2mjsQ2juU3tsgUor8ig"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/50 via-transparent to-transparent"></div>
+<div class="absolute bottom-2 left-3 right-3 flex items-center justify-between text-surface font-label-mono text-body-sm">
+<span>Skew: +0.14 (Transformed)</span>
+<span class="bg-surface-container-lowest/80 text-on-surface px-2 py-0.5 rounded backdrop-blur">Gaussian Norm Overlay</span>
+</div>
+</div>
+<!-- Metric Details Grid below distribution -->
+<div class="grid grid-cols-3 gap-space-xs mt-space-sm pt-space-xs">
+<div class="bg-surface-container/60 rounded-lg p-space-xs flex flex-col">
+<span class="font-label-md text-label-md text-text-muted">Mean ln(Price)</span>
+<span class="font-label-mono text-body-md text-on-surface font-bold">13.04</span>
+</div>
+<div class="bg-surface-container/60 rounded-lg p-space-xs flex flex-col">
+<span class="font-label-md text-label-md text-text-muted">Std. Deviation</span>
+<span class="font-label-mono text-body-md text-on-surface font-bold">0.526</span>
+</div>
+<div class="bg-surface-container/60 rounded-lg p-space-xs flex flex-col">
+<span class="font-label-md text-label-md text-text-muted">Kurtosis</span>
+<span class="font-label-mono text-body-md text-on-surface font-bold">3.08 (Platy)</span>
+</div>
+</div>
+</div>
+<!-- Feature Impact: Waterfront & View Premium Index -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-space-lg">landscape</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">View Amenity Premium Matrix</span>
+</div>
+<span class="font-label-mono text-body-sm text-shap-positive font-semibold">Hedonic Marginal Value</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-space-md">
+            Estimated additive coefficient over base baseline parcel with zero views.
+          </p>
+<!-- Interactive Bars for Amenity Bump -->
+<div class="flex flex-col gap-space-sm">
+<!-- Item 1: Lake Washington -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Lake Washington Frontage
+                </span>
+<span class="font-label-mono text-shap-positive font-bold">+$245,000 <span class="text-text-muted font-normal text-xs">(+42.1%)</span></span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<!-- Item 2: Puget Sound -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Puget Sound Coastal Shoreline
+                </span>
+<span class="font-label-mono text-shap-positive font-bold">+$210,000 <span class="text-text-muted font-normal text-xs">(+35.6%)</span></span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 79%"></div>
+</div>
+</div>
+<!-- Item 3: Seattle Skyline -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Seattle Skyline &amp; Space Needle
+                </span>
+<span class="font-label-mono text-shap-positive font-bold">+$180,000 <span class="text-text-muted font-normal text-xs">(+29.4%)</span></span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full" style="width: 67%"></div>
+</div>
+</div>
+<!-- Item 4: Mt Rainier -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center font-body-sm text-body-sm">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Mt. Rainier &amp; Cascade Range
+                </span>
+<span class="font-label-mono text-shap-positive font-bold">+$95,000 <span class="text-text-muted font-normal text-xs">(+16.8%)</span></span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-surface-tint h-full rounded-full" style="width: 38%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md p-space-xs bg-surface-container/60 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-1 text-text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm text-primary">info</span>
+<span>SHAP Global Importance: Waterfront ranks #4</span>
+</div>
+<span class="font-label-mono text-body-sm text-primary font-bold">|SHAP|: 0.187</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Grid / Benchmark Transactions & Valuations Feed -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-md rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<!-- Header with quick action trigger -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-xs">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-space-lg">fact_check</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Recent King County Transactions &amp; Model Valuations</h2>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+          Sampled holdout test validation set with actual recorded deeds vs. LightGBM predicted valuations.
+        </p>
+</div>
+<!-- Quick Action CTA -->
+<a class="inline-flex items-center gap-space-xs bg-primary text-on-primary px-space-md py-space-sm rounded-xl font-label-lg text-label-lg shadow-sm hover:opacity-95 transition-all" href="#">
+<span>Simulate Instant Property Valuation with AVM Engine</span>
+<span class="material-symbols-outlined text-space-md">arrow_forward</span>
+</a>
+</div>
+<!-- Comparative Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/50 text-text-secondary font-label-md text-label-md uppercase tracking-wider">
+<th class="py-space-sm px-space-md rounded-l-lg">Property Address</th>
+<th class="py-space-sm px-space-md">District / Zip</th>
+<th class="py-space-sm px-space-md">Living SqFt</th>
+<th class="py-space-sm px-space-md">Grade</th>
+<th class="py-space-sm px-space-md">Actual Sold</th>
+<th class="py-space-sm px-space-md">AVM Estimate</th>
+<th class="py-space-sm px-space-md">Delta / Error</th>
+<th class="py-space-sm px-space-md">Market Tier</th>
+<th class="py-space-sm px-space-md rounded-r-lg">View Amenities</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-on-surface">1042 106th Ave NE</td>
+<td class="py-space-sm px-space-md font-label-mono text-body-sm text-text-secondary">Bellevue • 98004</td>
+<td class="py-space-sm px-space-md font-label-mono">3,420 sqft</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-on-surface px-2 py-0.5 rounded font-label-mono text-body-sm font-semibold">10 Custom</span>
+</td>
+<td class="py-space-sm px-space-md font-label-mono font-bold text-on-surface">$1,450,000</td>
+<td class="py-space-sm px-space-md font-label-mono text-primary font-bold">$1,428,500</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-mono text-shap-positive font-semibold">-1.48%</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-md text-tier-luxury bg-surface-container px-2 py-0.5 rounded-full font-semibold">Luxury</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-secondary px-2 py-0.5 rounded font-label-md text-body-sm">City View</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-on-surface">4218 SW Dakota St</td>
+<td class="py-space-sm px-space-md font-label-mono text-body-sm text-text-secondary">Seattle • 98116</td>
+<td class="py-space-sm px-space-md font-label-mono">1,890 sqft</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-on-surface px-2 py-0.5 rounded font-label-mono text-body-sm font-semibold">7 Average</span>
+</td>
+<td class="py-space-sm px-space-md font-label-mono font-bold text-on-surface">$585,000</td>
+<td class="py-space-sm px-space-md font-label-mono text-primary font-bold">$592,400</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-mono text-shap-positive font-semibold">+1.26%</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-md text-tier-mid bg-surface-container px-2 py-0.5 rounded-full font-semibold">Mid-Market</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-text-muted px-2 py-0.5 rounded font-label-md text-body-sm">None</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-on-surface">7821 W Lake Sammamish Pkwy</td>
+<td class="py-space-sm px-space-md font-label-mono text-body-sm text-text-secondary">Redmond • 98052</td>
+<td class="py-space-sm px-space-md font-label-mono">4,110 sqft</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-on-surface px-2 py-0.5 rounded font-label-mono text-body-sm font-semibold">11 Custom</span>
+</td>
+<td class="py-space-sm px-space-md font-label-mono font-bold text-on-surface">$2,100,000</td>
+<td class="py-space-sm px-space-md font-label-mono text-primary font-bold">$2,045,000</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-mono text-shap-positive font-semibold">-2.61%</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-md text-tier-luxury bg-surface-container px-2 py-0.5 rounded-full font-semibold">Luxury</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-secondary px-2 py-0.5 rounded font-label-md text-body-sm">Waterfront (Lake)</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-on-surface">31245 28th Ave S</td>
+<td class="py-space-sm px-space-md font-label-mono text-body-sm text-text-secondary">Federal Way • 98003</td>
+<td class="py-space-sm px-space-md font-label-mono">1,420 sqft</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-on-surface px-2 py-0.5 rounded font-label-mono text-body-sm font-semibold">6 Low-Avg</span>
+</td>
+<td class="py-space-sm px-space-md font-label-mono font-bold text-on-surface">$310,000</td>
+<td class="py-space-sm px-space-md font-label-mono text-primary font-bold">$302,100</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-mono text-shap-positive font-semibold">-2.54%</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-md text-tier-entry bg-surface-container px-2 py-0.5 rounded-full font-semibold">Entry-Level</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-text-muted px-2 py-0.5 rounded font-label-md text-body-sm">None</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-on-surface">1844 Market St</td>
+<td class="py-space-sm px-space-md font-label-mono text-body-sm text-text-secondary">Kirkland • 98033</td>
+<td class="py-space-sm px-space-md font-label-mono">2,650 sqft</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-on-surface px-2 py-0.5 rounded font-label-mono text-body-sm font-semibold">8 Good</span>
+</td>
+<td class="py-space-sm px-space-md font-label-mono font-bold text-on-surface">$890,000</td>
+<td class="py-space-sm px-space-md font-label-mono text-primary font-bold">$874,200</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-mono text-shap-positive font-semibold">-1.77%</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="font-label-md text-tier-luxury bg-surface-container px-2 py-0.5 rounded-full font-semibold">Luxury</span>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="bg-surface-container text-secondary px-2 py-0.5 rounded font-label-md text-body-sm">Sound &amp; Mtns</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Benchmarking Summary Footnote -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xs text-body-sm text-body-sm text-text-muted">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-sm text-shap-positive">verified_user</span>
+<span>Cross-validation test fold 5 of 5 • Residual Mean: $1,420 • No geographic collinearity detected</span>
+</div>
+<div class="font-label-mono text-body-sm text-text-secondary">
+        Showing 5 of 4,569 held-out sample points
+      </div>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic Slider & Filter Interactions
+  document.getElementById('priceSlider').addEventListener('input', function(e) {
+    const val = parseInt(e.target.value);
+    const formatted = (val / 1000000).toFixed(2) + 'M';
+    document.getElementById('priceVal').textContent = '$' + formatted;
+  });
+
+  document.getElementById('gradeSlider').addEventListener('input', function(e) {
+    const val = e.target.value;
+    document.getElementById('gradeVal').textContent = 'Grade ' + val + '-13';
+  });
+
+  let waterfrontState = 0;
+  const waterfrontStates = ['All', 'Waterfront Only', 'Inland Only'];
+  document.getElementById('waterfrontBtn').addEventListener('click', function() {
+    waterfrontState = (waterfrontState + 1) % 3;
+    document.getElementById('waterfrontLabel').textContent = 'Waterfront: ' + waterfrontStates[waterfrontState];
+  });
+</script></main></div></body></html>
