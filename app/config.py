@@ -78,3 +78,4 @@ def get_zip_coordinates(df):
     coords = df.groupby('ZipCode')[['Latitude', 'Longitude']].median().to_dict(orient='index')
     all_zips = sorted([str(z) for z in coords.keys()])
     return coords, all_zips
+

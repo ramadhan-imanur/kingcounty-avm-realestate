@@ -8,9 +8,7 @@ import pandas as pd
 import numpy as np
 
 def render_simulator(reg_model, metadata, zip_coords, all_zipcodes):
-    """
-    Merender halaman simulator proyeksi ROI renovasi dan pertambahan ekuitas.
-    """
+    """Merender halaman simulator proyeksi ROI renovasi dan pertambahan ekuitas."""
     st.markdown(
         """
         <div style="margin-bottom:20px;">
@@ -25,14 +23,20 @@ def render_simulator(reg_model, metadata, zip_coords, all_zipcodes):
                 Simulating capital allocation scenarios to forecast equity expansion from architectural upgrades.
             </p>
         </div>
-        """,
-        unsafe_allow_html=True
+        """, unsafe_allow_html=True
     )
 
     r_col1, r_col2 = st.columns(2)
     with r_col1:
         st.markdown('<div class="aeris-card">', unsafe_allow_html=True)
-        st.subheader("Baseline: Current Property Status")
+        st.markdown(
+            """
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                <span class="material-symbols-outlined" style="color:#006398;">home</span>
+                <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Baseline: Current Status</h3>
+            </div>
+            """, unsafe_allow_html=True
+        )
         b_grade = st.slider("Current Grade", 4, 11, 7, key="sim_b_grade")
         b_cond = st.slider("Current Condition", 1, 5, 3, key="sim_b_cond")
         b_sqft = st.number_input("Current Living SqFt", value=1950, step=50, key="sim_b_sqft")
@@ -42,7 +46,14 @@ def render_simulator(reg_model, metadata, zip_coords, all_zipcodes):
 
     with r_col2:
         st.markdown('<div class="aeris-card">', unsafe_allow_html=True)
-        st.subheader("Scenario: Target Renovation Specs")
+        st.markdown(
+            """
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                <span class="material-symbols-outlined" style="color:#006948;">construction</span>
+                <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Scenario: Target Renovation</h3>
+            </div>
+            """, unsafe_allow_html=True
+        )
         t_grade = st.slider("Target Building Grade", 4, 12, max(b_grade, 9), key="sim_t_grade")
         t_cond = st.slider("Target Condition", 1, 5, 5, key="sim_t_cond")
         t_add_sqft = st.number_input("Living Area Expansion (SqFt)", value=250, step=50, key="sim_t_add_sqft")
@@ -79,7 +90,27 @@ def render_simulator(reg_model, metadata, zip_coords, all_zipcodes):
     res4.metric("Projected ROI", f"{roi:.1f}%")
 
     if net_profit > 0:
-        st.success(f"🎉 **Rencana Renovasi Layak Eksekusi!** Proyeksi penambahan nilai properti sebesar **${gain:,.0f}**, menghasilkan laba bersih **${net_profit:,.0f}** di atas anggaran renovasi.")
+        st.markdown(
+            f"""
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:12px; padding:14px 18px; margin-top:16px; display:flex; align-items:center; gap:12px;">
+                <span class="material-symbols-outlined" style="color:#059669; font-size:24px;">task_alt</span>
+                <div>
+                    <div style="font-weight:700; color:#065f46; font-size:0.95rem;">Rencana Renovasi Layak Eksekusi (High Equity Return)</div>
+                    <div style="color:#047857; font-size:0.875rem;">Proyeksi kenaikan nilai properti <b>+${gain:,.0f}</b> menghasilkan laba bersih <b>+${net_profit:,.0f}</b>.</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True
+        )
     else:
-        st.warning("⚠️ Biaya renovasi melampaui estimasi kenaikan nilai pasar wajar properti. Pertimbangkan kembali lingkup pekerjaan renovasi.")
+        st.markdown(
+            """
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:14px 18px; margin-top:16px; display:flex; align-items:center; gap:12px;">
+                <span class="material-symbols-outlined" style="color:#d97706; font-size:24px;">warning</span>
+                <div>
+                    <div style="font-weight:700; color:#92400e; font-size:0.95rem;">Peringatan Efisiensi Anggaran (Marginal Return)</div>
+                    <div style="color:#b45309; font-size:0.875rem;">Biaya renovasi melampaui estimasi kenaikan nilai pasar wajar properti. Pertimbangkan efisiensi scope.</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True
+        )
     st.markdown('</div>', unsafe_allow_html=True)

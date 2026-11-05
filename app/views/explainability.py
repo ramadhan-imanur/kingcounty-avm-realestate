@@ -35,7 +35,15 @@ def render_explainability(metadata):
     c_chart, c_text = st.columns([6, 5])
     with c_chart:
         st.markdown('<div class="aeris-card">', unsafe_allow_html=True)
-        st.subheader("Peringkat Bobot Kontribusi Fitur Model")
+        st.markdown(
+            """
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                <span class="material-symbols-outlined" style="color:#006948; font-size:22px;">leaderboard</span>
+                <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Peringkat Bobot Kontribusi Fitur Model</h3>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         fig_bar = px.bar(
             imp_df.head(10).iloc[::-1],
             x="Importance (R² Loss)",
@@ -59,9 +67,10 @@ def render_explainability(metadata):
         st.markdown(
             """
             <div class="aeris-card">
-                <h3 style="font-size:1.15rem; font-weight:700; color:#0b1c30; margin-top:0;">
-                    💡 Tiga Pilar Utama Valuasi Ekonometrika
-                </h3>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                    <span class="material-symbols-outlined" style="color:#006948; font-size:22px;">lightbulb</span>
+                    <h3 style="font-size:1.15rem; font-weight:700; color:#0b1c30; margin:0;">Tiga Pilar Utama Valuasi Ekonometrika</h3>
+                </div>
                 <div style="font-size:0.9rem; line-height:1.6; color:#475569;">
                     <p><b>1. Lokasi Spasial (Latitude & Longitude):</b><br>
                     Koordinat geografis menjadi faktor penentu tunggal terkuat. King County bagian utara (Bellevue, Redmond, Kirkland, Seattle Utara) memiliki premi lokasi yang sangat tinggi berkat kedekatan dengan danau dan pusat industri teknologi dunia.</p>
@@ -74,3 +83,4 @@ def render_explainability(metadata):
             """,
             unsafe_allow_html=True
         )
+

@@ -95,7 +95,7 @@ def render_valuator(reg_model, clf_model, metadata, zip_coords, all_zipcodes):
                 view_sound = st.checkbox("Puget Sound View", value=False)
                 view_mountain = st.checkbox("Mt. Rainier / Cascades", value=False)
                 traffic_noise = st.checkbox("Traffic Noise Exposure", value=False)
-            st.form_submit_button("⚡ Run Valuation Engine", use_container_width=True)
+            st.form_submit_button("Run Valuation Engine", use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col_result:

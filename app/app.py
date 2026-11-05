@@ -26,9 +26,10 @@ from views import (
 )
 
 # 1. Konfigurasi Halaman & Injeksi Stylesheet Aeris Spatial Valuation
+icon_path = os.path.join(APP_DIR, "assets", "icon.png")
 st.set_page_config(
-    page_title="KingCounty-AVM | Smart Valuator",
-    page_icon="🏠",
+    page_title="KingCounty-AVM | Enterprise Real Estate Valuation",
+    page_icon=icon_path if os.path.exists(icon_path) else "A",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -42,28 +43,29 @@ zip_coords, all_zipcodes = get_zip_coordinates(clean_df)
 # 3. Sidebar Navigasi (Stitch Aeris Branding)
 st.sidebar.markdown(
     """
-    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-        <div style="background:#006948; color:white; border-radius:12px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.3rem;">
-            KC
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding:4px 0;">
+        <div style="background:#006948; color:white; border-radius:12px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,105,72,0.25);">
+            <span class="material-symbols-outlined" style="font-size:26px; color:#ffffff;">apartment</span>
         </div>
         <div>
-            <div style="font-weight:700; font-size:1.1rem; color:#0b1c30; line-height:1.2;">KingCounty-AVM</div>
-            <div style="font-size:0.75rem; color:#64748B; font-family:'JetBrains Mono';">Aeris Spatial Valuation</div>
+            <div style="font-weight:800; font-size:1.15rem; color:#0b1c30; letter-spacing:-0.02em; line-height:1.2;">KingCounty-AVM</div>
+            <div style="font-size:0.75rem; color:#006948; font-family:'JetBrains Mono'; font-weight:600;">Aeris Spatial Engine</div>
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
+NAV_VALUATOR = "Smart AVM Valuator"
+NAV_EXPLORER = "Market Overview & Spatial Explorer"
+NAV_XAI = "SHAP XAI Decomposition"
+NAV_SIMULATOR = "Renovation ROI Simulator"
+NAV_METHODOLOGY = "Model Health & Methodology"
+
 app_mode = st.sidebar.radio(
-    "Modul Navigasi:",
-    [
-        "🏠 Smart AVM Valuator",
-        "📊 Market Overview & Spatial Explorer",
-        "🔍 Shapley Feature Attribution (XAI)",
-        "🔨 Renovation ROI Simulator",
-        "ℹ️ Model Health & Methodology"
-    ]
+    "Navigation Modules:",
+    [NAV_VALUATOR, NAV_EXPLORER, NAV_XAI, NAV_SIMULATOR, NAV_METHODOLOGY],
+    label_visibility="collapsed"
 )
 
 st.sidebar.markdown("---")
@@ -75,7 +77,7 @@ st.sidebar.markdown(
             v2.4 Production Engine
         </div>
         <div style="color:#475569; margin-bottom:8px;">
-            Trained on <b>22,847 King County parcels</b> with validated geospatial metrics.
+            Trained on <b>22,847 King County parcels</b> with validated spatial metrics.
         </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
             <span>Core Regressor:</span>
@@ -95,13 +97,13 @@ st.sidebar.markdown(
 )
 
 # 4. Router Modul Halaman
-if app_mode == "🏠 Smart AVM Valuator":
+if app_mode == NAV_VALUATOR:
     render_valuator(reg_model, clf_model, metadata, zip_coords, all_zipcodes)
-elif app_mode == "📊 Market Overview & Spatial Explorer":
+elif app_mode == NAV_EXPLORER:
     render_explorer(clean_df)
-elif app_mode == "🔍 Shapley Feature Attribution (XAI)":
+elif app_mode == NAV_XAI:
     render_explainability(metadata)
-elif app_mode == "🔨 Renovation ROI Simulator":
+elif app_mode == NAV_SIMULATOR:
     render_simulator(reg_model, metadata, zip_coords, all_zipcodes)
-elif app_mode == "ℹ️ Model Health & Methodology":
+elif app_mode == NAV_METHODOLOGY:
     render_methodology()

@@ -36,7 +36,7 @@ def render_explorer(clean_df):
             <div class="aeris-card" style="padding:16px;">
                 <div style="font-size:0.75rem; color:#64748B; font-weight:600;">TOTAL ANALYZED PARCELS</div>
                 <div style="font-family:'JetBrains Mono'; font-size:1.8rem; font-weight:800; color:#0b1c30;">{len(clean_df):,}</div>
-                <div style="font-size:0.75rem; color:#006948;">✓ 100% Validated Deeds</div>
+                <div style="font-size:0.75rem; color:#006948; display:flex; align-items:center; gap:4px;"><span class="material-symbols-outlined" style="font-size:14px;">check_circle</span> 100% Validated Deeds</div>
             </div>
             """,
             unsafe_allow_html=True
@@ -94,7 +94,15 @@ def render_explorer(clean_df):
 
     # Map Card
     st.markdown('<div class="aeris-card">', unsafe_allow_html=True)
-    st.subheader("🗺️ Spatial Distribution & Valuation Heatmap")
+    st.markdown(
+        """
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+            <span class="material-symbols-outlined" style="color:#006398; font-size:24px;">explore</span>
+            <h3 style="margin:0; font-size:1.2rem; font-weight:700; color:#0b1c30;">Spatial Distribution & Valuation Heatmap</h3>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     sample_size = min(3500, len(df_view))
     df_sample = df_view.sample(sample_size, random_state=42)
 
@@ -117,3 +125,4 @@ def render_explorer(clean_df):
     )
     st.plotly_chart(fig_map, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
+

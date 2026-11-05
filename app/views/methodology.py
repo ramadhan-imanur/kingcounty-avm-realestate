@@ -7,9 +7,7 @@ import streamlit as st
 import pandas as pd
 
 def render_methodology():
-    """
-    Merender halaman dokumentasi metodologi ekonometrika dan scorecard performa.
-    """
+    """Merender halaman dokumentasi metodologi ekonometrika dan scorecard performa."""
     st.markdown(
         """
         <div style="margin-bottom:20px;">
@@ -24,12 +22,18 @@ def render_methodology():
                 Empirical evaluation benchmarks and econometric foundations.
             </p>
         </div>
-        """,
-        unsafe_allow_html=True
+        """, unsafe_allow_html=True
     )
 
     st.markdown('<div class="aeris-card">', unsafe_allow_html=True)
-    st.subheader("📊 Regression Algorithm Performance Scorecard")
+    st.markdown(
+        """
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+            <span class="material-symbols-outlined" style="color:#006948; font-size:22px;">assessment</span>
+            <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Regression Algorithm Performance Scorecard</h3>
+        </div>
+        """, unsafe_allow_html=True
+    )
     scorecard = [
         {"Model Algorithm": "OLS Linear Regression", "R² (Log)": 0.7460, "RMSE (Log)": 0.2860, "MAPE": "22.04%", "MAE": "$124,551"},
         {"Model Algorithm": "Ridge Regression (L2)", "R² (Log)": 0.7460, "RMSE (Log)": 0.2859, "MAPE": "22.01%", "MAE": "$124,387"},
@@ -38,7 +42,14 @@ def render_methodology():
     ]
     st.table(pd.DataFrame(scorecard))
 
-    st.subheader("📚 Data Provenance & Citation")
+    st.markdown(
+        """
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; margin-top:24px;">
+            <span class="material-symbols-outlined" style="color:#006398; font-size:22px;">source</span>
+            <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Data Provenance & Citation</h3>
+        </div>
+        """, unsafe_allow_html=True
+    )
     st.markdown("""
     - **Primary Dataset:** King County Department of Assessments & University of Washington (*Harvard Dataverse*).
     - **Methodology:** CRISP-DM (*Cross-Industry Standard Process for Data Mining*) & Hedonic Pricing Econometrics.
