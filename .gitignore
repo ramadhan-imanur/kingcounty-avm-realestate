@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.env
+
+# Editor & OS configurations
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Unused Raw Datasets from Harvard Dataverse (keep only 02_king_county_real_estate)
+data/raw/01_world_management_survey/
+data/raw/03_texas_liability_insurance/
+data/raw/04_classic_car_auction_2025/
+data/raw/05_customer_satisfaction_korea_2024/
