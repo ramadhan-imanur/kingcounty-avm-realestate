@@ -21,7 +21,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. Pemuatan Model & Data Ter-Cache
+# 2. Pemuatan Model & Data Ter-Cache (dengan Self-Healing Cloud Fallback)
 @st.cache_resource
 def load_models_and_metadata():
     base_dir = os.path.dirname(os.path.dirname(__file__))
@@ -31,10 +31,44 @@ def load_models_and_metadata():
     clf_path = os.path.join(models_dir, "market_tier_classifier.joblib")
     meta_path = os.path.join(models_dir, "model_metadata.json")
     
-    reg_model = joblib.load(reg_path)
-    clf_model = joblib.load(clf_path)
     with open(meta_path, "r") as f:
         metadata = json.load(f)
+        
+    reg_model = None
+    clf_model = None
+    
+    # 1. Coba muat model serialisasi
+    try:
+        reg_model = joblib.load(reg_path)
+        clf_model = joblib.load(clf_path)
+        # Verifikasi kompatibilitas inferensi scikit-learn
+        dummy_sample = pd.DataFrame([metadata['feature_defaults']])[metadata['features']]
+        reg_model.predict(dummy_sample)
+        clf_model.predict(dummy_sample)
+    except Exception as err:
+        # Fallback otomatis jika terjadi ketidakcocokan versi Python / Scikit-Learn / Pickle di Cloud
+        from sklearn.ensemble import HistGradientBoostingRegressor, HistGradientBoostingClassifier
+        
+        data_path = os.path.join(base_dir, "data", "processed", "king_county_clean.csv")
+        df_train = pd.read_csv(data_path, low_memory=False)
+        
+        features = metadata["features"]
+        X = df_train[features]
+        y_log = np.log(df_train["SalePrice"])
+        y_tier = df_train["PropertyTier"]
+        
+        reg_model = HistGradientBoostingRegressor(max_iter=250, learning_rate=0.08, random_state=42)
+        reg_model.fit(X, y_log)
+        
+        clf_model = HistGradientBoostingClassifier(max_iter=150, learning_rate=0.08, random_state=42)
+        clf_model.fit(X, y_tier)
+        
+        # Simpan kembali jika memiliki izin tulis
+        try:
+            joblib.dump(reg_model, reg_path)
+            joblib.dump(clf_model, clf_path)
+        except Exception:
+            pass
         
     return reg_model, clf_model, metadata
 
