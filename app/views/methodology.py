@@ -6,7 +6,7 @@ Dokumentasi teknis arsitektur model, tabel scorecard algoritma, dan landasan dat
 import streamlit as st
 import pandas as pd
 
-def render_methodology():
+def render_methodology(metadata=None):
     """Merender halaman dokumentasi metodologi ekonometrika dan scorecard performa."""
     st.markdown(
         """
@@ -19,7 +19,7 @@ def render_methodology():
                 Model Health & Technical Architecture
             </h1>
             <p style="color:#475569; font-size:0.95rem; margin:0;">
-                Empirical evaluation benchmarks and econometric foundations.
+                Empirical evaluation benchmarks across 7 comparative regression models and multi-class classification.
             </p>
         </div>
         """, unsafe_allow_html=True
@@ -30,17 +30,35 @@ def render_methodology():
         """
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
             <span class="material-symbols-outlined" style="color:#006948; font-size:22px;">assessment</span>
-            <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Regression Algorithm Performance Scorecard</h3>
+            <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Regression Algorithm Performance Scorecard (7 Models)</h3>
         </div>
         """, unsafe_allow_html=True
     )
     scorecard = [
-        {"Model Algorithm": "OLS Linear Regression", "R² (Log)": 0.7460, "RMSE (Log)": 0.2860, "MAPE": "22.04%", "MAE": "$124,551"},
-        {"Model Algorithm": "Ridge Regression (L2)", "R² (Log)": 0.7460, "RMSE (Log)": 0.2859, "MAPE": "22.01%", "MAE": "$124,387"},
-        {"Model Algorithm": "Random Forest Regressor", "R² (Log)": 0.8659, "RMSE (Log)": 0.2078, "MAPE": "14.33%", "MAE": "$79,623"},
-        {"Model Algorithm": "HistGradientBoosting Regressor", "R² (Log)": "0.8848 (Production)", "RMSE (Log)": 0.1926, "MAPE": "13.39%", "MAE": "$72,329"}
+        {"Model Algorithm": "OLS Linear Regression", "R² (Log)": "0.7460", "RMSE (Log)": "0.2860", "MAPE": "22.04%", "MAE": "$124,551", "Paradigma": "Classical Econometrics"},
+        {"Model Algorithm": "Ridge Regression (L2)", "R² (Log)": "0.7460", "RMSE (Log)": "0.2859", "MAPE": "22.01%", "MAE": "$124,387", "Paradigma": "Regularized L2 (Shrinkage)"},
+        {"Model Algorithm": "Lasso Regression (L1)", "R² (Log)": "0.7458", "RMSE (Log)": "0.2861", "MAPE": "22.05%", "MAE": "$124,637", "Paradigma": "Regularized L1 (Sparsity)"},
+        {"Model Algorithm": "Elastic Net Regression", "R² (Log)": "0.7460", "RMSE (Log)": "0.2860", "MAPE": "22.03%", "MAE": "$124,510", "Paradigma": "Hybrid L1 + L2 Regularization"},
+        {"Model Algorithm": "Decision Tree Regressor", "R² (Log)": "0.8168", "RMSE (Log)": "0.2429", "MAPE": "17.60%", "MAE": "$98,721", "Paradigma": "Non-Linear Decision Tree"},
+        {"Model Algorithm": "Random Forest Regressor", "R² (Log)": "0.8659", "RMSE (Log)": "0.2078", "MAPE": "14.33%", "MAE": "$79,623", "Paradigma": "Tree Ensemble (Bagging)"},
+        {"Model Algorithm": "HistGradientBoosting Regressor", "R² (Log)": "0.8848 (Production)", "RMSE (Log)": "0.1926", "MAPE": "13.39%", "MAE": "$72,329", "Paradigma": "Tree Ensemble (Boosting)"}
     ]
     st.table(pd.DataFrame(scorecard))
+
+    st.markdown(
+        """
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; margin-top:24px;">
+            <span class="material-symbols-outlined" style="color:#006948; font-size:22px;">category</span>
+            <h3 style="margin:0; font-size:1.15rem; font-weight:700; color:#0b1c30;">Market Tier Classifier Performance Scorecard</h3>
+        </div>
+        """, unsafe_allow_html=True
+    )
+    clf_scorecard = [
+        {"Classifier Algorithm": "Decision Tree Classifier", "Accuracy": "83.52%", "Macro F1-Score": "0.8350", "Status": "Baseline Tree"},
+        {"Classifier Algorithm": "Random Forest Classifier", "Accuracy": "85.96%", "Macro F1-Score": "0.8568", "Status": "Ensemble Bagging"},
+        {"Classifier Algorithm": "HistGradientBoosting Classifier", "Accuracy": "87.78%", "Macro F1-Score": "0.8774", "Status": "Production Classifier"}
+    ]
+    st.table(pd.DataFrame(clf_scorecard))
 
     st.markdown(
         """

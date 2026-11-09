@@ -12,8 +12,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.ensemble import HistGradientBoostingRegressor, HistGradientBoostingClassifier, RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
+from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
+from sklearn.ensemble import (
+    HistGradientBoostingRegressor, HistGradientBoostingClassifier,
+    RandomForestRegressor, RandomForestClassifier
+)
 from sklearn.metrics import (
     r2_score, mean_squared_error, mean_absolute_error, 
     mean_absolute_percentage_error, accuracy_score, f1_score, confusion_matrix
@@ -55,11 +59,14 @@ def run_modeling_pipeline(clean_data_path, models_dir=None, figures_dir=None):
     )
     print(f"Dataset dibagi: Train={len(X_train):,} baris, Test={len(X_test):,} baris.")
 
-    # 2. Benchmarking Model Regresi
-    print("\n--- 1. Pelatihan Model Regresi Hedonik (AVM) ---")
+    # 2. Benchmarking Model Regresi (7 Model Komparatif Sesuai Standar Akademik & Industri)
+    print("\n--- 1. Pelatihan & Benchmarking Model Regresi Hedonik (AVM) ---")
     reg_models = {
         'OLS Linear Regression': LinearRegression(),
         'Ridge Regression (L2)': Ridge(alpha=10.0),
+        'Lasso Regression (L1)': Lasso(alpha=0.0005, max_iter=3000, random_state=42),
+        'Elastic Net Regression': ElasticNet(alpha=0.0005, l1_ratio=0.5, max_iter=3000, random_state=42),
+        'Decision Tree Regressor': DecisionTreeRegressor(max_depth=12, min_samples_leaf=10, random_state=42),
         'Random Forest Regressor': RandomForestRegressor(n_estimators=100, max_depth=14, n_jobs=-1, random_state=42),
         'HistGradientBoosting Regressor': HistGradientBoostingRegressor(max_iter=250, learning_rate=0.08, random_state=42)
     }
@@ -95,15 +102,40 @@ def run_modeling_pipeline(clean_data_path, models_dir=None, figures_dir=None):
 
     print(f"\nModel Regresi Terbaik: {best_reg_name} dengan R2 = {best_r2:.4f}")
 
-    # 3. Pelatihan Model Klasifikasi Tier Properti
-    print("\n--- 2. Pelatihan Model Klasifikasi Tier Properti ---")
-    clf = HistGradientBoostingClassifier(max_iter=150, learning_rate=0.08, random_state=42)
-    clf.fit(X_train, ytier_train)
-    tier_preds = clf.predict(X_test)
+    # 3. Pelatihan Model Klasifikasi Tier Properti (Multi-Model Benchmarking)
+    print("\n--- 2. Pelatihan & Benchmarking Model Klasifikasi Tier Properti ---")
+    clf_models = {
+        'Decision Tree Classifier': DecisionTreeClassifier(max_depth=10, random_state=42),
+        'Random Forest Classifier': RandomForestClassifier(n_estimators=100, max_depth=12, n_jobs=-1, random_state=42),
+        'HistGradientBoosting Classifier': HistGradientBoostingClassifier(max_iter=150, learning_rate=0.08, random_state=42)
+    }
 
+    clf_results = {}
+    best_f1 = -1
+    best_clf_model = None
+    best_clf_name = ""
+
+    for name, clf_cand in clf_models.items():
+        print(f"Melatih {name}...")
+        clf_cand.fit(X_train, ytier_train)
+        preds = clf_cand.predict(X_test)
+        acc = float(accuracy_score(ytier_test, preds))
+        f1 = float(f1_score(ytier_test, preds, average='macro'))
+        clf_results[name] = {
+            'accuracy': round(acc * 100, 2),
+            'macro_f1': round(f1, 4)
+        }
+        print(f"  -> Akurasi: {acc*100:.2f}% | Macro F1-Score: {f1:.4f}")
+        if f1 > best_f1:
+            best_f1 = f1
+            best_clf_model = clf_cand
+            best_clf_name = name
+
+    clf = best_clf_model
+    tier_preds = clf.predict(X_test)
     clf_acc = float(accuracy_score(ytier_test, tier_preds))
     clf_f1 = float(f1_score(ytier_test, tier_preds, average='macro'))
-    print(f"Akurasi Klasifikasi: {clf_acc*100:.2f}% | Macro F1-Score: {clf_f1:.4f}")
+    print(f"\nModel Klasifikasi Terbaik: {best_clf_name} (Akurasi: {clf_acc*100:.2f}%, Macro F1: {clf_f1:.4f})")
 
     # 4. Feature Importance (Permutation Importance)
     print("\nMenghitung bobot fitur (Feature Importance) menggunakan Permutation Importance...")
@@ -187,8 +219,10 @@ def run_modeling_pipeline(clean_data_path, models_dir=None, figures_dir=None):
         'target_transform': 'log',
         'metrics_regression': reg_results,
         'metrics_classification': {
+            'best_model': best_clf_name,
             'accuracy': round(clf_acc * 100, 2),
-            'macro_f1': round(clf_f1, 4)
+            'macro_f1': round(clf_f1, 4),
+            'models_comparison': clf_results
         },
         'feature_importance_ranked': sorted_features,
         'feature_defaults': feature_defaults,

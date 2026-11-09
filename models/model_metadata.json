@@ -35,6 +35,24 @@
       "MAPE": 22.01,
       "MAE_dollars": 124387.0
     },
+    "Lasso Regression (L1)": {
+      "R2_log": 0.7458,
+      "RMSE_log": 0.2861,
+      "MAPE": 22.05,
+      "MAE_dollars": 124637.0
+    },
+    "Elastic Net Regression": {
+      "R2_log": 0.746,
+      "RMSE_log": 0.286,
+      "MAPE": 22.03,
+      "MAE_dollars": 124510.0
+    },
+    "Decision Tree Regressor": {
+      "R2_log": 0.8168,
+      "RMSE_log": 0.2429,
+      "MAPE": 17.6,
+      "MAE_dollars": 98721.0
+    },
     "Random Forest Regressor": {
       "R2_log": 0.8659,
       "RMSE_log": 0.2078,
@@ -49,8 +67,23 @@
     }
   },
   "metrics_classification": {
+    "best_model": "HistGradientBoosting Classifier",
     "accuracy": 87.78,
-    "macro_f1": 0.8774
+    "macro_f1": 0.8774,
+    "models_comparison": {
+      "Decision Tree Classifier": {
+        "accuracy": 83.52,
+        "macro_f1": 0.835
+      },
+      "Random Forest Classifier": {
+        "accuracy": 85.96,
+        "macro_f1": 0.8568
+      },
+      "HistGradientBoosting Classifier": {
+        "accuracy": 87.78,
+        "macro_f1": 0.8774
+      }
+    }
   },
   "feature_importance_ranked": [
     [

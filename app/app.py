@@ -106,4 +106,4 @@ elif app_mode == NAV_XAI:
 elif app_mode == NAV_SIMULATOR:
     render_simulator(reg_model, metadata, zip_coords, all_zipcodes)
 elif app_mode == NAV_METHODOLOGY:
-    render_methodology()
+    render_methodology(metadata)

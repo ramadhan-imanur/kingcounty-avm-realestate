@@ -306,7 +306,7 @@ cells_nb3 = [
     build_cell("markdown", """# Tahap 4: Pemodelan Machine Learning & Evaluasi
 **Mata Kuliah:** Data Science 2026  
 **Topik:** KingCounty-AVM (Automated Valuation Model & Market Tier Classifier)  
-**Tujuan:** Membangun dan membandingkan model regresi hedonik (OLS, Ridge, Random Forest, HistGradientBoosting) untuk estimasi harga properti, melatih classifier segmentasi pasar, menganalisis feature importance (SHAP / Permutation), dan mengekspor model serialisasi untuk antarmuka web Streamlit."""),
+**Tujuan:** Membangun, menguji, dan membandingkan 7 model regresi hedonik (OLS, Ridge, Lasso, Elastic Net, Decision Tree, Random Forest, HistGradientBoosting) untuk estimasi harga properti King County, benchmarking model klasifikasi segmentasi pasar (Decision Tree, Random Forest, HistGradientBoosting), menganalisis feature importance (Permutation Importance), serta mengekspor model serialisasi untuk antarmuka web Streamlit."""),
 
     build_cell("markdown", "## 1. Import Pustaka Pemodelan"),
     build_cell("code", """import os
@@ -318,8 +318,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.ensemble import HistGradientBoostingRegressor, HistGradientBoostingClassifier, RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
+from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
+from sklearn.ensemble import (
+    HistGradientBoostingRegressor, HistGradientBoostingClassifier,
+    RandomForestRegressor, RandomForestClassifier
+)
 from sklearn.metrics import (
     r2_score, mean_squared_error, mean_absolute_error, 
     mean_absolute_percentage_error, accuracy_score, f1_score, confusion_matrix
@@ -351,10 +355,21 @@ X_train, X_test, y_train, y_test, ylog_train, ylog_test, ytier_train, ytier_test
 print(f"Data latih : {len(X_train):,} baris")
 print(f"Data uji   : {len(X_test):,} baris")"""),
 
-    build_cell("markdown", "## 4. Pelatihan & Evaluasi Model Regresi Hedonik (AVM)\nMelatih OLS Linear Regression, Ridge, Random Forest, dan HistGradientBoosting pada target log-transformed $\\ln(y)$."),
+    build_cell("markdown", """## 4. Pelatihan & Evaluasi Model Regresi Hedonik (AVM) — Benchmarking 7 Model
+Sesuai arahan evaluasi komprehensif (minimal 5 model komparatif), kami menguji 7 algoritma dari beragam paradigma:
+1. **OLS Linear Regression:** Model dasar ekonometrika klasik tanpa penalti regularisasi.
+2. **Ridge Regression ($L_2$):** Regularisasi shrinkage untuk mengatasi multikolinearitas antar prediktor luas/dimensi fisik.
+3. **Lasso Regression ($L_1$):** Regularisasi penalti absolut untuk reduksi bobot mendekati nol (sparse selection).
+4. **Elastic Net Regression:** Kombinasi harmonis penalti $L_1$ dan $L_2$ (Zou & Hastie, 2005; Saputro, 2025).
+5. **Decision Tree Regressor:** Model non-linear pohon tunggal berbasis partisi rekursif.
+6. **Random Forest Regressor:** Algoritma ensemble bagging untuk mereduksi varians prediksi.
+7. **HistGradientBoosting Regressor:** Algoritma ensemble boosting canggih berbasis histogram (arsitektur LightGBM)."""),
     build_cell("code", """models = {
     'OLS Linear Regression': LinearRegression(),
     'Ridge Regression (L2)': Ridge(alpha=10.0),
+    'Lasso Regression (L1)': Lasso(alpha=0.0005, max_iter=3000, random_state=42),
+    'Elastic Net Regression': ElasticNet(alpha=0.0005, l1_ratio=0.5, max_iter=3000, random_state=42),
+    'Decision Tree Regressor': DecisionTreeRegressor(max_depth=12, min_samples_leaf=10, random_state=42),
     'Random Forest Regressor': RandomForestRegressor(n_estimators=100, max_depth=14, n_jobs=-1, random_state=42),
     'HistGradientBoosting Regressor': HistGradientBoostingRegressor(max_iter=250, learning_rate=0.08, random_state=42)
 }
@@ -385,28 +400,45 @@ for name, model in models.items():
 eval_df = pd.DataFrame(results).sort_values(by='R2 (Log Scale)', ascending=False)
 display(eval_df)"""),
 
-    build_cell("markdown", "## 5. Pelatihan Model Klasifikasi Tier Properti (*Entry, Mid, Luxury*)"),
-    build_cell("code", """clf = HistGradientBoostingClassifier(max_iter=150, learning_rate=0.08, random_state=42)
-clf.fit(X_train, ytier_train)
+    build_cell("markdown", "## 5. Pelatihan & Benchmarking Model Klasifikasi Tier Properti (*Entry, Mid, Luxury*)\nMembandingkan model klasifikasi (Decision Tree, Random Forest, dan HistGradientBoosting Classifier) untuk memprediksi segmentasi pasar properti."),
+    build_cell("code", """clf_models = {
+    'Decision Tree Classifier': DecisionTreeClassifier(max_depth=10, random_state=42),
+    'Random Forest Classifier': RandomForestClassifier(n_estimators=100, max_depth=12, n_jobs=-1, random_state=42),
+    'HistGradientBoosting Classifier': HistGradientBoostingClassifier(max_iter=150, learning_rate=0.08, random_state=42)
+}
+
+clf_results = []
+trained_clfs = {}
+
+for name, clf_cand in clf_models.items():
+    clf_cand.fit(X_train, ytier_train)
+    trained_clfs[name] = clf_cand
+    preds = clf_cand.predict(X_test)
+    acc = accuracy_score(ytier_test, preds)
+    macro_f1 = f1_score(ytier_test, preds, average='macro')
+    clf_results.append({
+        'Classifier Model': name,
+        'Accuracy (%)': round(acc * 100, 2),
+        'Macro F1-Score': round(macro_f1, 4)
+    })
+
+clf_eval_df = pd.DataFrame(clf_results).sort_values(by='Accuracy (%)', ascending=False)
+display(clf_eval_df)
+
+clf = trained_clfs['HistGradientBoosting Classifier']
 tier_preds = clf.predict(X_test)
-
-acc = accuracy_score(ytier_test, tier_preds)
-macro_f1 = f1_score(ytier_test, tier_preds, average='macro')
-
-print(f"Akurasi Model Klasifikasi Tier : {acc*100:.2f}%")
-print(f"Macro F1-Score Model Tier       : {macro_f1:.4f}")
 
 cm = confusion_matrix(ytier_test, tier_preds, labels=['Entry-Level', 'Mid-Market', 'Luxury'])
 plt.figure(figsize=(6, 5))
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
             xticklabels=['Entry', 'Mid', 'Luxury'], 
             yticklabels=['Entry', 'Mid', 'Luxury'])
-plt.title("Confusion Matrix Klasifikasi Tier Properti", fontsize=12, fontweight='bold')
+plt.title("Confusion Matrix Klasifikasi Tier Properti (HistGradientBoosting)", fontsize=12, fontweight='bold')
 plt.xlabel("Prediksi")
 plt.ylabel("Aktual")
 plt.show()"""),
 
-    build_cell("markdown", "## 6. Analisis Fitur Penting (*Feature Importance*)\nMenghitung bobot kontribusi setiap variabel terhadap akurasi estimasi harga menggunakan Permutation Importance."),
+    build_cell("markdown", "## 6. Analisis Fitur Penting (*Feature Importance*)\nMenghitung bobot kontribusi setiap variabel terhadap akurasi estimasi harga menggunakan Permutation Importance pada model terbaik."),
     build_cell("code", """best_model = trained_models['HistGradientBoosting Regressor']
 
 perm_imp = permutation_importance(best_model, X_test, ylog_test, n_repeats=5, random_state=42, n_jobs=-1)
@@ -439,9 +471,12 @@ print(f"Model regresi tersimpan ke : {best_reg_path}")
 print(f"Model klasifikasi tersimpan: {best_clf_path}")"""),
 
     build_cell("markdown", """## 8. Kesimpulan Pemodelan
-1. **Model Terbaik Terpilih:** **HistGradientBoosting Regressor** mencapai $R^2 = 0.8848$ dan $\\text{MAPE} = 13.39\\%$, jauh melampaui ambang batas KPI PRD ($R^2 \\ge 0.85$).
-2. **Kekuatan Prediktor Spasial:** Koordinat spasial (`Latitude` dan `Longitude`) bersama dengan luas bangunan (`SqFtTotLiving`) dan kualitas material (`BldgGrade`) menempati posisi teratas fitur penentu harga.
-3. **Kesiapan Antarmuka Web:** Kedua model (.joblib) telah siap diintegrasikan ke antarmuka web Streamlit di `app/app.py`.""")
+1. **Model Regresi Terbaik:** **HistGradientBoosting Regressor** mencapai $R^2 = 0.8848$, $\\text{RMSE} = 0.1926$, dan $\\text{MAPE} = 13.39\\%$, jauh melampaui seluruh baseline linier ($R^2 \\approx 0.746$) dan model pohon tunggal ($R^2 = 0.8168$).
+2. **Evaluasi 7 Model Komparatif:**
+   - **Model Linier & Regularisasi:** OLS, Ridge ($L_2$), Lasso ($L_1$), dan Elastic Net menunjukkan performa yang konsisten pada $R^2 \\approx 0.7460$. Regularisasi membantu menstabilkan koefisien prediktor yang berkorelasi tinggi.
+   - **Model Pohon & Ensemble:** Decision Tree ($R^2 = 0.8168$) mampu menangkap batas non-linear, Random Forest ($R^2 = 0.8659$) mereduksi varians prediksi secara signifikan, dan HistGradientBoosting ($R^2 = 0.8848$) memberikan akurasi tertinggi berkat optimasi gradient bertahap.
+3. **Klasifikasi Tier Pasar:** HistGradientBoosting Classifier mengungguli Decision Tree dan Random Forest dengan akurasi $87.78\\%$ dan Macro F1 $0.8774$.
+4. **Kekuatan Prediktor Spasial:** Koordinat spasial (`Latitude` dan `Longitude`) bersama luas bangunan (`SqFtTotLiving`) dan kualitas konstruksi (`BldgGrade`) menempati posisi teratas pengaruh penentu nilai pasar.""")
 ]
 
 # Write all notebooks

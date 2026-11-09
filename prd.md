@@ -196,10 +196,11 @@
 - **Strategi Model Baseline:**
   - Regresi Baseline: *Ordinary Least Squares (OLS) Multiple Linear Regression* sebagai tolok ukur ekonometrika klasik.
   - Klasifikasi Baseline: *Logistic Regression* multinomial dengan standardisasi fitur.
-- **Kandidat Algoritma Utama (Ensemble & Gradient Boosting):**
-  - **Random Forest Regressor:** Menangkap hubungan non-linear antara luas, grade bangunan, dan koordinat tanpa asumsi normalitas residual yang ketat.
-  - **XGBoost / LightGBM Regressor:** Algoritma *gradient boosted decision trees* dengan regularisasi pohon mendalam yang menjadi standar industri teratas dalam pemodelan tabel real estat berskala besar.
-  - **Ridge & Lasso Regression:** Untuk analisis penalti koefisien fitur linier dan seleksi multikolinearitas.
+- **Kandidat Algoritma Utama (Benchmarking 7 Model):**
+  - **OLS Linear Regression:** Model dasar ekonometrika klasik kuadrat terkecil.
+  - **Ridge, Lasso & Elastic Net Regression:** Analisis komparatif penalti norma $L_2$ (Ridge shrinkage), norma $L_1$ (Lasso sparsity), dan hibrida Elastic Net ($L_1 + L_2$) untuk menangani multikolinearitas antar fitur fisik dan koordinat sesuai rujukan akademis (Zou & Hastie, 2005; Saputro, 2025).
+  - **Decision Tree & Random Forest Regressor:** Model non-linear pohon tunggal dan ensemble bagging untuk menangkap interaksi batas wilayah non-linear tanpa asumsi linearitas.
+  - **HistGradientBoosting Regressor (LightGBM-style):** Algoritma *gradient boosted decision trees* berbasis histogram yang menjadi standar industri teratas dalam pemodelan tabel real estat berskala besar ($R^2 = 0.8848$).
 - **Prosedur Validasi & Pencegahan Leakage:**
   - Pembagian data: 80% *Train Set*, 20% *Test Set* secara acak terkontrol (`random_state=42`).
   - 5-Fold Cross-Validation pada set pelatihan.
@@ -287,7 +288,7 @@
 | **Fase 1: PRD & Ruang Lingkup** | Berkas `prd.md` terintegrasi | Mengunci spesifikasi sistem KingCounty-AVM, arsitektur data, dan KPI | `DONE` |
 | **Fase 2: Data Profiling & Spasial EDA** | Notebook `notebooks/01_eda.ipynb` | Analisis statistik 22.847 data, matriks korelasi 147 kolom, distribusi harga logaritmik | `DONE` |
 | **Fase 3: Data Cleaning & Feature Eng** | Notebook `notebooks/02_cleaning_preprocessing.ipynb` & `data/processed/` | Reduksi 147 kolom $\to 40$ fitur, imputasi KNN spasial, parsing tanggal & usia bangunan | `DONE` |
-| **Fase 4: Model Training & Evaluation** | Notebook `notebooks/03_modeling_evaluation.ipynb` & model di `models/` | Pelatihan OLS, Ridge, RF, LightGBM ($R^2 = 0.8848$, Akurasi Tier = $87.78\%$), ekspor `.joblib` | `DONE` |
+| **Fase 4: Model Training & Evaluation** | Notebook `notebooks/03_modeling_evaluation.ipynb` & model di `models/` | Pelatihan & evaluasi 7 Model Regresi (OLS, Ridge, Lasso, Elastic Net, Decision Tree, RF, HistGradientBoosting $R^2 = 0.8848$) & 3 Classifier (Akurasi Tier = $87.78\%$), ekspor `.joblib` | `DONE` |
 | **Fase 5: Web App Development** | Aplikasi aktif di `app/app.py` | Antarmuka Streamlit (Kalkulator AVM, Peta Spasial, Visualisasi XAI, Simulator ROI) | `DONE` |
 | **Fase 6: Pengujian & Laporan Akhir** | Laporan akhir di `reports/` & gambar di `reports/figures/` | Validasi akurasi menyeluruh, evaluasi residual, penyusunan dokumentasi ilmiah | `IN PROGRESS` |
 
