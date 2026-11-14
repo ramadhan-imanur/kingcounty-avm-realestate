@@ -4,7 +4,7 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/src/(.*)\\.js",
+      "source": "/(.*)\\.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -13,7 +13,7 @@
       ]
     },
     {
-      "source": "/src/(.*)\\.css",
+      "source": "/(.*)\\.css",
       "headers": [
         {
           "key": "Content-Type",
