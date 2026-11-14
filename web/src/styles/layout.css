@@ -10,7 +10,7 @@
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-3xl);
-  box-shadow: var(--shadow-chassis);
+  box-shadow: 0 24px 60px -12px rgba(15, 34, 64, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.95);
   width: 100%;
   max-width: 1560px;
   margin: 0 auto;
@@ -21,7 +21,6 @@
   position: relative;
 }
 
-/* Header Bar */
 .app-header {
   height: 5rem;
   padding: 0 1.5rem;
@@ -35,7 +34,6 @@
   z-index: 30;
 }
 
-/* Workspace Container */
 .main-workspace-container {
   display: flex;
   flex: 1;
@@ -45,16 +43,25 @@
   position: relative;
 }
 
-/* Main Content Workspace */
-.app-main {
+.app-main, main {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   min-height: 0;
   padding: 1.5rem;
   scroll-behavior: smooth;
 }
 
-/* Desktop Fixed Viewport and Independent Scroll */
+#main-sidebar, .app-sidebar {
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease,
+              border 0.3s ease;
+  will-change: width, min-width, max-width, padding, opacity;
+}
+
 @media (min-width: 768px) {
   html, body {
     height: 100vh;
@@ -79,20 +86,18 @@
     flex-direction: row;
   }
 
-  .app-sidebar {
+  #main-sidebar, .app-sidebar {
     width: 16rem;
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     flex-shrink: 0;
     border-right: 1px solid rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(12px);
-    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.25s ease;
   }
 
-  /* Collapsed Sidebar on Desktop */
+  body.sidebar-collapsed #main-sidebar,
   body.sidebar-collapsed .app-sidebar {
     width: 0 !important;
     min-width: 0 !important;
@@ -110,8 +115,14 @@
   }
 }
 
+/* Custom Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.35); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.55); }
+* { scrollbar-width: thin; scrollbar-color: rgba(148, 163, 184, 0.35) transparent; }
+
 @media (max-width: 767px) {
-  body.sidebar-collapsed .app-sidebar {
-    display: none !important;
-  }
+  body.sidebar-collapsed #main-sidebar,
+  body.sidebar-collapsed .app-sidebar { display: none !important; }
 }

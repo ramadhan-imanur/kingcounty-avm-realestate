@@ -8,6 +8,7 @@ import { appStore } from '../../core/state.js';
 
 export function renderSidebar() {
   const aside = document.createElement('aside');
+  aside.id = 'main-sidebar';
   aside.className = 'app-sidebar p-4 flex flex-col justify-between';
 
   const navItems = [
@@ -28,7 +29,7 @@ export function renderSidebar() {
 
       <nav class="flex md:flex-col gap-1.5 overflow-x-auto md:overflow-visible">
         ${navItems.map(item => `
-          <button data-tab="${item.id}" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white/60 transition-all text-left cursor-pointer">
+          <button data-tab="${item.id}" class="nav-item nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white/60 transition-all text-left cursor-pointer">
             ${item.icon('w-4 h-4')}
             <span>${item.label}</span>
           </button>
@@ -66,9 +67,9 @@ export function renderSidebar() {
     aside.querySelectorAll('.nav-btn').forEach(btn => {
       const isTarget = btn.dataset.tab === activeTab;
       if (isTarget) {
-        btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold bg-[#064e3b] text-white shadow-md shadow-emerald-950/25 text-left transition-all';
+        btn.className = 'nav-item nav-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold bg-[#006948] text-white shadow-md shadow-emerald-950/25 text-left transition-all';
       } else {
-        btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white/60 text-left transition-all';
+        btn.className = 'nav-item nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white/60 text-left transition-all';
       }
     });
   }

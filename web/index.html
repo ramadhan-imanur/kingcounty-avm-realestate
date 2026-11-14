@@ -8,10 +8,38 @@
   <!-- Typography Tokens: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS Engine -->
+  <!-- Tailwind CSS CDN Engine with Custom Stitch Design Tokens -->
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#006948",
+            "primary-container": "#00855d",
+            "secondary": "#006398",
+            "secondary-container": "#5bb8fe",
+            "tertiary": "#4648d4",
+            "tier-entry": "#0D9488",
+            "tier-mid": "#0284C7",
+            "tier-luxury": "#7C3AED",
+            "shap-positive": "#059669",
+            "shap-negative": "#E11D48",
+            "text-primary": "#0F172A",
+            "text-secondary": "#475569",
+            "text-muted": "#94A3B8"
+          },
+          fontFamily: {
+            sans: ["'Plus Jakarta Sans'", "sans-serif"],
+            mono: ["'JetBrains Mono'", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
   
   <!-- Interactive Leaflet Geospatial Engine -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -20,10 +48,14 @@
   <!-- Modular Design System Stylesheet -->
   <link rel="stylesheet" href="src/styles/main.css">
 </head>
-<body class="min-h-screen flex justify-center items-start">
+<body class="p-2 sm:p-5 lg:p-7 min-h-screen flex justify-center items-start pt-3 sm:pt-6">
+
+  <!-- Ambient Glow Effects -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
 
   <!-- MASTER FLOATING CHASSIS (Dynamic Mount Point) -->
-  <div class="glass-chassis"></div>
+  <div class="glass-chassis rounded-3xl w-full max-w-[1560px] mx-auto min-h-[94vh] flex flex-col overflow-hidden shadow-2xl relative"></div>
 
   <!-- Pure ES Modules Application Entrypoint -->
   <script type="module" src="src/main.js"></script>

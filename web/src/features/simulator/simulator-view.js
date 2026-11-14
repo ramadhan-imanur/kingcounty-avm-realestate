@@ -47,19 +47,19 @@ export function renderSimulatorView() {
           <div class="grid grid-cols-2 gap-3 text-xs">
             <div class="flex flex-col gap-1">
               <label class="font-semibold text-slate-700">Harga Properti ($)</label>
-              <input type="number" id="sim-price" value="${basePrice}" step="25000" class="p-2 rounded-lg border font-mono font-bold">
+              <input type="number" id="sim-price" value="${basePrice}" step="25000" class="glass-input font-mono font-bold">
             </div>
             <div class="flex flex-col gap-1">
               <label class="font-semibold text-slate-700">Uang Muka (%)</label>
-              <input type="number" id="sim-dp" value="${downPaymentPct}" min="5" max="50" step="5" class="p-2 rounded-lg border font-mono">
+              <input type="number" id="sim-dp" value="${downPaymentPct}" min="5" max="50" step="5" class="glass-input font-mono">
             </div>
             <div class="flex flex-col gap-1">
               <label class="font-semibold text-slate-700">Bunga KPR (% p.a)</label>
-              <input type="number" id="sim-rate" value="${interestRate}" min="3" max="12" step="0.25" class="p-2 rounded-lg border font-mono">
+              <input type="number" id="sim-rate" value="${interestRate}" min="3" max="12" step="0.25" class="glass-input font-mono">
             </div>
             <div class="flex flex-col gap-1">
               <label class="font-semibold text-slate-700">Tenor Pinjaman</label>
-              <select id="sim-term" class="p-2 rounded-lg border font-mono">
+              <select id="sim-term" class="glass-input font-mono">
                 <option value="15" ${loanTerm === 15 ? 'selected' : ''}>15 Tahun</option>
                 <option value="30" ${loanTerm === 30 ? 'selected' : ''}>30 Tahun</option>
               </select>
