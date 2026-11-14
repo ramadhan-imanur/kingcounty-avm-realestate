@@ -108,20 +108,6 @@ The pipeline prepares raw assessment files through five reproducible stages:
 
 ---
 
-## Interactive application
-
-The project includes an interactive Streamlit application in `app/app.py` organized into five analytical tools:
-
-- **Smart AVM Valuator:** Calculates instant property valuations, provides confidence bounds based on model MAPE (plus or minus 13.39%), assigns a property market tier, and compares the result against local postal code medians.
-- **Market Overview and Spatial Explorer:** An interactive map plotting over 22,700 transactions with price filters, geographic distributions, and summary statistics.
-- **Explainability Inspector:** Displays permutation importance rankings and individual feature contributions.
-- **Renovation ROI Simulator:** Models potential equity gains from updating building grade and maintenance condition, estimating projected value changes and return on investment.
-- **Model Health and Methodology:** Reports live cross-validation metrics, data split summaries, and error profiles.
-
-![Dashboard Preview](reports/figures/dashboard_overview.png)
-
----
-
 ## Quickstart
 
 ### 1. Environment setup
