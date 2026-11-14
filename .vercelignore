@@ -1,0 +1,17 @@
+# Exclude Python backend and model binaries from Vercel static build
+app/
+src/
+models/
+notebooks/
+data/
+reports/
+venv/
+env/
+.venv/
+.streamlit/
+requirements.txt
+*.py
+*.pyc
+*.ipynb
+*.joblib
+*.pkl
