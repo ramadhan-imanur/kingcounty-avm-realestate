@@ -1,6 +1,6 @@
 """
 Modul Konfigurasi & Pemuatan Model Ter-Cache: KingCounty-AVM
-Menangani pemuatan artefak serialisasi, dataset analitik, dan koordinat spasial.
+Menangani pemuatan artefak serialisasi, dataset analitik, K-Means clustering, dan koordinat spasial.
 """
 
 import os
@@ -18,19 +18,18 @@ DATA_DIR = os.path.join(BASE_DIR, "data", "processed")
 def load_models_and_metadata():
     """
     Memuat model regresi, classifier tier, dan metadata.
-    Memiliki mekanisme self-healing jika unpickle lintas versi scikit-learn gagal.
+    Memiliki mekanisme fallback otomatis jika unpickle lintas versi scikit-learn gagal.
     """
     reg_path = os.path.join(MODELS_DIR, "best_valuation_model.joblib")
     clf_path = os.path.join(MODELS_DIR, "market_tier_classifier.joblib")
     meta_path = os.path.join(MODELS_DIR, "model_metadata.json")
     
-    with open(meta_path, "r") as f:
+    with open(meta_path, "r", encoding="utf-8") as f:
         metadata = json.load(f)
         
     reg_model = None
     clf_model = None
     
-    # 1. Coba muat model serialisasi biner
     try:
         reg_model = joblib.load(reg_path)
         clf_model = joblib.load(clf_path)
@@ -38,7 +37,6 @@ def load_models_and_metadata():
         reg_model.predict(dummy_sample)
         clf_model.predict(dummy_sample)
     except Exception:
-        # Fallback otomatis on-the-fly jika ada perbedaan versi scikit-learn di Cloud
         from sklearn.ensemble import HistGradientBoostingRegressor, HistGradientBoostingClassifier
         data_clean_path = os.path.join(DATA_DIR, "king_county_clean.csv")
         df_train = pd.read_csv(data_clean_path, low_memory=False)
@@ -62,6 +60,39 @@ def load_models_and_metadata():
         
     return reg_model, clf_model, metadata
 
+@st.cache_resource
+def load_kmeans_data():
+    """
+    Memuat artefak K-Means micro-market clustering.
+    """
+    kmeans_path = os.path.join(MODELS_DIR, "kmeans_cluster_model.joblib")
+    if os.path.exists(kmeans_path):
+        try:
+            return joblib.load(kmeans_path)
+        except Exception:
+            return None
+    return None
+
+def assign_kmeans_cluster(kmeans_data, lat, lon, price):
+    """
+    Menentukan klaster mikro-pasar spasial berdasarkan Latitude, Longitude, dan LogPrice.
+    """
+    if not kmeans_data or 'model' not in kmeans_data or 'scaler' not in kmeans_data:
+        return 0, "Klaster Geospasial Standar"
+    try:
+        scaler = kmeans_data['scaler']
+        model = kmeans_data['model']
+        log_price = float(np.log(max(10000.0, float(price))))
+        df_feat = pd.DataFrame([[lat, lon, log_price]], columns=['Latitude', 'Longitude', 'LogPrice'])
+        scaled_feat = scaler.transform(df_feat)
+        cluster_id = int(model.predict(scaled_feat)[0])
+        profiles = kmeans_data.get('cluster_profiles', [])
+        profile = next((p for p in profiles if p.get('Cluster') == cluster_id), None)
+        archetype = profile.get('Profil_Mikro_Pasar', f'Klaster {cluster_id}') if profile else f'Klaster {cluster_id}'
+        return cluster_id, archetype
+    except Exception:
+        return 0, "Klaster Geospasial Standar"
+
 @st.cache_data
 def load_clean_data_sample():
     """
@@ -78,4 +109,3 @@ def get_zip_coordinates(df):
     coords = df.groupby('ZipCode')[['Latitude', 'Longitude']].median().to_dict(orient='index')
     all_zips = sorted([str(z) for z in coords.keys()])
     return coords, all_zips
-
