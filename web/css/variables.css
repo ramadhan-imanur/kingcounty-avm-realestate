@@ -1,0 +1,107 @@
+/* ==========================================================================
+   AERIS SPATIAL VALUATION - DESIGN SYSTEM TOKENS & RESETS
+   Google Stitch Project: 612066658549398949
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+:root {
+  /* --- Primary Color Tokens --- */
+  --color-primary: #006948;
+  --color-primary-container: #00855d;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed: #85f8c4;
+  --color-on-primary-fixed: #002114;
+
+  /* --- Secondary & Tertiary Tokens --- */
+  --color-secondary: #006398;
+  --color-secondary-container: #5bb8fe;
+  --color-on-secondary: #ffffff;
+  --color-tertiary: #4648d4;
+  --color-tertiary-container: #6063ee;
+
+  /* --- Surface & Background Canvas --- */
+  --color-background: #f8f9ff;
+  --color-surface: #f8f9ff;
+  --color-surface-dim: #cbdbf5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-container: #e5eeff;
+  --color-surface-container-high: #dce9ff;
+  --color-surface-container-highest: #d3e4fe;
+  --color-on-surface: #0b1c30;
+  --color-on-surface-variant: #3d4a42;
+
+  /* --- Glass Tokens (Atmospheric Transparency) --- */
+  --glass-canvas: rgba(248, 250, 252, 0.72);
+  --glass-surface: rgba(255, 255, 255, 0.78);
+  --glass-surface-elevated: rgba(255, 255, 255, 0.90);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-border-subtle: rgba(226, 232, 240, 0.80);
+
+  /* --- Semantic Typography Colors --- */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  /* --- Market Tiers --- */
+  --tier-entry: #0D9488;
+  --tier-mid: #0284C7;
+  --tier-luxury: #7C3AED;
+
+  /* --- SHAP & Machine Learning Diagnostics --- */
+  --shap-positive: #059669;
+  --shap-negative: #E11D48;
+
+  /* --- Spatial Choropleth Tokens --- */
+  --map-choropleth-low: #E0F2FE;
+  --map-choropleth-mid: #38BDF8;
+  --map-choropleth-high: #0369A1;
+
+  /* --- Error & Warning --- */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+
+  /* --- Typography Fonts --- */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* --- Radius Scale --- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 1.75rem;
+  --radius-full: 9999px;
+}
+
+/* Base resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Tabular figures for strictly vertical numerical alignment */
+.tabular-nums, .font-label-mono, .font-kpi-metric, .price-display {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Material Symbols icon styling with anti-glitch protection */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  vertical-align: middle;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}

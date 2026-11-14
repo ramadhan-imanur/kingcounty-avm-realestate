@@ -1,0 +1,119 @@
+/* ==========================================================================
+   AERIS SPATIAL VALUATION - VIEWPORT LAYOUT & COLLAPSIBLE SIDEBAR
+   Google Stitch Project: 612066658549398949
+   ========================================================================== */
+
+/* Base Viewport & Atmospheric Background */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background-color: var(--color-background);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(224, 242, 254, 0.75) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(209, 250, 229, 0.65) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(224, 231, 255, 0.55) 0px, transparent 50%),
+    linear-gradient(135deg, #f0f4f9 0%, #e2eaf4 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Firefox Scrollbar Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+/* Desktop App Viewport & Independent Scrollable Workspaces */
+@media (min-width: 768px) {
+  html, body {
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .glass-chassis {
+    height: calc(100vh - 1.5rem) !important;
+    max-height: calc(100vh - 1.5rem) !important;
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .main-workspace-container {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  #main-sidebar {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+  }
+
+  main {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Desktop Collapsible Sidebar & Smooth Animations */
+#main-sidebar {
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease,
+              border 0.3s ease;
+  will-change: width, min-width, max-width, padding, opacity;
+}
+
+@media (min-width: 768px) {
+  body.sidebar-collapsed #main-sidebar {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-right-width: 0 !important;
+    border-right-color: transparent !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    visibility: hidden;
+  }
+
+  body.sidebar-collapsed #sidebar-reopen-float-btn {
+    display: inline-flex !important;
+  }
+
+  body.sidebar-collapsed #sidebar-toggle-arrow {
+    transform: rotate(180deg);
+    transform-origin: 14px 12px;
+  }
+}
+
+#sidebar-toggle-btn:hover #sidebar-toggle-icon {
+  transform: scale(1.08);
+}
+
+@media (max-width: 767px) {
+  body.sidebar-collapsed #main-sidebar {
+    display: none !important;
+  }
+}
