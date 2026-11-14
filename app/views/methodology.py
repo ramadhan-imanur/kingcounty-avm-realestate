@@ -5,6 +5,7 @@ diagnostik residual Gauss-Markov, segmentasi K-Means k=6, dan panel rekomendasi 
 Desain 100% native Streamlit: ringan, terstruktur, dan transparan.
 """
 
+import os
 import streamlit as st
 import pandas as pd
 
@@ -219,3 +220,10 @@ def render_methodology(metadata=None, kmeans_data=None):
         - **Kode Etik & Integritas:** *Uniform Standards of Professional Appraisal Practice (USPAP)* Standard 6.
         - **Metodologi Ekonometrika:** Hedonic Price Model, Robust M-Estimators, Dual-Pipeline Machine Learning (LightGBM + Spatial K-Means).
         """)
+
+    # Referensi Desain Prototipe Stitch (On-Demand)
+    app_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    stitch_img = os.path.join(app_dir, "stitch", "explainable_ai_shap_valuation_breakdown", "screen.png")
+    if os.path.exists(stitch_img):
+        with st.expander("Referensi Desain Prototipe Stitch (SHAP XAI Breakdown)", expanded=False):
+            st.image(stitch_img, caption="Prototipe Desain Google Stitch Project: 612066658549398949 (SHAP Valuation Breakdown)")

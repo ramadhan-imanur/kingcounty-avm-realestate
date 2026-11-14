@@ -1,11 +1,12 @@
 """
 KingCounty-AVM: Automated Real Estate Valuation & Spatial Intelligence Engine
-Aplikasi Streamlit Ringan & Bersih dengan Fitur Identik Versi Web
+Aplikasi Streamlit Ringan & Bersih dengan Aset Desain Google Stitch
 """
 
 import os
 import sys
 import streamlit as st
+from PIL import Image
 
 # Pastikan direktori app dan root proyek berada dalam sys.path
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -28,9 +29,13 @@ from views import (
     render_methodology
 )
 
-# 1. Konfigurasi Halaman Ringan & Injeksi Styling Minimal
+# 1. Konfigurasi Halaman Ringan dengan Aset Ikon Stitch
+icon_path = os.path.join(APP_DIR, "assets", "icon.png")
+app_icon = Image.open(icon_path) if os.path.exists(icon_path) else None
+
 st.set_page_config(
     page_title="KingCounty-AVM | Valuasi Properti & Analisis Spasial",
+    page_icon=app_icon,
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -44,6 +49,8 @@ zip_coords, all_zipcodes = get_zip_coordinates(clean_df)
 
 # 3. Sidebar Navigasi Bersih & Ringan (Bebas Emoticon)
 with st.sidebar:
+    if app_icon:
+        st.image(app_icon, width=42)
     st.markdown("### KingCounty-AVM")
     st.caption("Sistem Valuasi Cerdas Properti & Riset Spasial")
     st.markdown("---")

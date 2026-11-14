@@ -4,6 +4,7 @@ Menyajikan analisis spasial, ringkasan KPI pasar, peta sebaran geografis, dan pe
 Desain 100% native Streamlit: ringan, cepat, dan responsif.
 """
 
+import os
 import streamlit as st
 import pandas as pd
 
@@ -124,3 +125,10 @@ def render_explorer(clean_df):
             s4.metric("Harga Tertinggi", f"${df_filtered['SalePrice'].max():,.0f}")
         else:
             st.write("N/A")
+
+    # Referensi Desain Prototipe Stitch (On-Demand)
+    app_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    stitch_img = os.path.join(app_dir, "stitch", "market_overview_spatial_explorer", "screen.png")
+    if os.path.exists(stitch_img):
+        with st.expander("Referensi Desain Prototipe Stitch (Market Overview & Spatial Explorer)", expanded=False):
+            st.image(stitch_img, caption="Prototipe Desain Google Stitch Project: 612066658549398949 (Spatial Explorer)")

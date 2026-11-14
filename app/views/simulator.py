@@ -4,6 +4,7 @@ Kalkulasi potensi kenaikan nilai pasar (appreciation) vs. estimasi biaya renovas
 Desain 100% native Streamlit: ringan, interaktif, dan akurat.
 """
 
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -200,3 +201,10 @@ def render_simulator(reg_model=None, metadata=None, zip_coords=None, all_zipcode
             res2.metric("Valuasi Pasca-Renovasi", f"${val_post:,.0f}", delta=f"+${ml_gain:,.0f}")
             res3.metric("Laba Ekuitas Bersih", f"${ml_profit:,.0f}")
             res4.metric("ROI Bersih ML", f"{ml_roi:.1f}%")
+
+    # Referensi Desain Prototipe Stitch (On-Demand)
+    app_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    stitch_img = os.path.join(app_dir, "stitch", "renovation_roi_simulator", "screen.png")
+    if os.path.exists(stitch_img):
+        with st.expander("Referensi Desain Prototipe Stitch (Renovation ROI Simulator)", expanded=False):
+            st.image(stitch_img, caption="Prototipe Desain Google Stitch Project: 612066658549398949 (Renovation Simulator)")

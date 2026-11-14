@@ -4,6 +4,7 @@ Mengolah input parameter properti, menghitung valuasi wajar, segmentasi pasar, k
 Desain bersih, responsif, dan ringan menggunakan komponen default Streamlit.
 """
 
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -230,3 +231,10 @@ def render_valuator(reg_model, clf_model, metadata, zip_coords, all_zipcodes, km
                     st.markdown(f"**102nd Ave SE**")
                     st.markdown(f"**${estimated_price * 1.042:,.0f}**")
                     st.caption(f"{bedrooms + 1} KT • {bathrooms} KM • {sqft_living + 200:,} sq.ft")
+
+    # Referensi Desain Prototipe Stitch (On-Demand)
+    app_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    stitch_img = os.path.join(app_dir, "stitch", "smart_avm_property_valuator", "screen.png")
+    if os.path.exists(stitch_img):
+        with st.expander("Referensi Desain Prototipe Stitch (Smart AVM Valuator)", expanded=False):
+            st.image(stitch_img, caption="Prototipe Desain Google Stitch Project: 612066658549398949 (Smart AVM Valuator)")
