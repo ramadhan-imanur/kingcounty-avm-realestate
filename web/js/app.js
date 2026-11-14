@@ -5,6 +5,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initSidebarToggle();
   initNavigation();
   initValuator();
   initRenovationSimulator();
@@ -429,4 +430,74 @@ function animateValue(element, endVal, duration = 400) {
     }
   }
   requestAnimationFrame(update);
+}
+
+
+// ==========================================================================
+// 5. DESKTOP COLLAPSIBLE SIDEBAR
+// ==========================================================================
+function initSidebarToggle() {
+  const body = document.body;
+  const toggleBtn = document.getElementById('sidebar-toggle-btn');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+  const reopenFloatBtn = document.getElementById('sidebar-reopen-float-btn');
+  const toggleText = document.getElementById('sidebar-toggle-text');
+
+  function setSidebarState(collapsed) {
+    if (collapsed) {
+      body.classList.add('sidebar-collapsed');
+      if (toggleText) toggleText.textContent = 'Buka Menu';
+      if (toggleBtn) {
+        toggleBtn.setAttribute('title', 'Buka Menu Utama (Desktop)');
+        toggleBtn.classList.add('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+      }
+      try {
+        localStorage.setItem('kingcounty_sidebar_collapsed', 'true');
+      } catch (e) {}
+    } else {
+      body.classList.remove('sidebar-collapsed');
+      if (toggleText) toggleText.textContent = 'Tutup Menu';
+      if (toggleBtn) {
+        toggleBtn.setAttribute('title', 'Tutup Menu Utama (Desktop)');
+        toggleBtn.classList.remove('bg-emerald-50', 'text-emerald-700', 'border-emerald-200');
+      }
+      try {
+        localStorage.setItem('kingcounty_sidebar_collapsed', 'false');
+      } catch (e) {}
+    }
+  }
+
+  function toggleSidebar() {
+    const isCollapsed = body.classList.contains('sidebar-collapsed');
+    setSidebarState(!isCollapsed);
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleSidebar();
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      setSidebarState(true);
+    });
+  }
+
+  if (reopenFloatBtn) {
+    reopenFloatBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      setSidebarState(false);
+    });
+  }
+
+  // Restore saved state on load (if viewport is desktop width)
+  try {
+    const saved = localStorage.getItem('kingcounty_sidebar_collapsed');
+    if (saved === 'true' && window.innerWidth >= 768) {
+      setSidebarState(true);
+    }
+  } catch (e) {}
 }

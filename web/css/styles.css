@@ -444,3 +444,108 @@ input[type=range]:hover::-webkit-slider-thumb {
     display: none !important;
   }
 }
+
+
+/* ==========================================================================
+   DESKTOP APP VIEWPORT & INDEPENDENT CONTENT SCROLLING
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  html, body {
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .glass-chassis {
+    height: calc(100vh - 1.5rem) !important;
+    max-height: calc(100vh - 1.5rem) !important;
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .main-workspace-container {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  #main-sidebar {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+  }
+
+  main {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ==========================================================================
+   DESKTOP COLLAPSIBLE SIDEBAR
+   ========================================================================== */
+
+#main-sidebar {
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease,
+              border 0.3s ease;
+  will-change: width, min-width, max-width, padding, opacity;
+}
+
+@media (min-width: 768px) {
+  body.sidebar-collapsed #main-sidebar {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-right-width: 0 !important;
+    border-right-color: transparent !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    visibility: hidden;
+  }
+
+  body.sidebar-collapsed #sidebar-reopen-float-btn {
+    display: inline-flex !important;
+  }
+
+  body.sidebar-collapsed #sidebar-toggle-arrow {
+    transform: rotate(180deg);
+    transform-origin: 14px 12px;
+  }
+}
+
+#sidebar-toggle-btn:hover #sidebar-toggle-icon {
+  transform: scale(1.08);
+}
+
+
+/* Firefox scrollbar support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+@media (max-width: 767px) {
+  body.sidebar-collapsed #main-sidebar {
+    display: none !important;
+  }
+}
