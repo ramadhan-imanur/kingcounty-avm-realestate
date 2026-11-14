@@ -12,7 +12,7 @@ def render_explorer(clean_df):
     """
     Merender halaman penjelajah pasar dan sebaran spasial properti King County.
     """
-    st.title("🧭 Jelajah Pasar & Sebaran Spasial")
+    st.title("Jelajah Pasar & Sebaran Spasial")
     st.caption("Peta kepadatan transaksi, distribusi harga per square foot, dan komparasi submarket regional.")
 
     # 4 Top KPI Metric Cards (Native Streamlit)
@@ -112,10 +112,10 @@ def render_explorer(clean_df):
         submarket_df = pd.DataFrame(submarket_data)
         st.dataframe(submarket_df, hide_index=True, use_container_width=True)
 
-        st.info("💡 **Insight Spasial**: Properti di sisi danau (Lake Washington / Bellevue) mempertahankan valuasi per sq.ft tertinggi ($495–$542), sementara koridor selatan (Renton, Kent, Auburn) menawarkan rasio keterjangkauan modal optimal ($215–$255/sq.ft).")
+        st.info("**Insight Spasial**: Properti di sisi danau (Lake Washington / Bellevue) mempertahankan valuasi per sq.ft tertinggi ($495–$542), sementara koridor selatan (Renton, Kent, Auburn) menawarkan rasio keterjangkauan modal optimal ($215–$255/sq.ft).")
 
     # Filtered Summary Statistics Expander
-    with st.expander("📊 Statistik Deskriptif Hasil Filter", expanded=False):
+    with st.expander("Statistik Deskriptif Hasil Filter", expanded=False):
         if len(df_filtered) > 0:
             s1, s2, s3, s4 = st.columns(4)
             s1.metric("Properti Terpilih", f"{len(df_filtered):,}")

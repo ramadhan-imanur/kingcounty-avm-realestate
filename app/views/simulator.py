@@ -13,7 +13,7 @@ def render_simulator(reg_model=None, metadata=None, zip_coords=None, all_zipcode
     """
     Merender halaman simulasi paket renovasi dan kalkulasi ROI ekuitas properti.
     """
-    st.title("📈 Simulasi Renovasi & Nilai Tambah Properti")
+    st.title("Simulasi Renovasi & Nilai Tambah Properti")
     st.caption("Kalkulasi potensi kenaikan nilai pasar (appreciation) vs. estimasi biaya modal renovasi di King County.")
 
     # Base Property Value Input
@@ -133,7 +133,7 @@ def render_simulator(reg_model=None, metadata=None, zip_coords=None, all_zipcode
 
         # Recommendation Card
         st.info(
-            "💡 **Rekomendasi Analis Properti King County**:\n\n"
+            " **Rekomendasi Analis Properti King County**:\n\n"
             "Di pasar King County, peningkatan **Grade Kualitas Arsitektural** (ROI 192%) dan "
             "**Renovasi Dapur Modern** (ROI 150%) memberikan margin nilai tambah tertinggi. "
             "Pembeli di wilayah Eastside dan Seattle sangat memprioritaskan estetika kontemporer dan ruang fungsional siap huni."
@@ -158,7 +158,7 @@ def render_simulator(reg_model=None, metadata=None, zip_coords=None, all_zipcode
 
     # Advanced Parametric ML Simulation Expander
     if reg_model is not None and metadata is not None and zip_coords and all_zipcodes:
-        with st.expander("🛠️ Simulasi Kustom Parametrik Machine Learning", expanded=False):
+        with st.expander("Simulasi Kustom Parametrik Machine Learning", expanded=False):
             st.write("Gunakan model regresi machine learning untuk menguji dampak renovasi spesifik pada suatu kode pos.")
             
             c_p1, c_p2, c_p3 = st.columns(3)

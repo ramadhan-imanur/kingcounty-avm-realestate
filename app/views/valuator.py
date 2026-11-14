@@ -29,7 +29,7 @@ ZIP_METADATA = {
 
 def render_valuator(reg_model, clf_model, metadata, zip_coords, all_zipcodes, kmeans_data=None):
     """Merender antarmuka kalkulator nilai properti cerdas."""
-    st.subheader("🏠 Kalkulator Nilai Properti Cerdas")
+    st.subheader("Kalkulator Nilai Properti Cerdas")
     st.caption("Estimasi nilai pasar wajar hunian King County berbasis Machine Learning dengan interval keyakinan 90%, klaster spasial K-Means, dan interpretasi fitur SHAP.")
     
     col_input, col_output = st.columns([1, 1], gap="large")
@@ -171,17 +171,17 @@ def render_valuator(reg_model, clf_model, metadata, zip_coords, all_zipcodes, km
 
             # Badge Segmen Pasar & Klaster K-Means
             if predicted_tier == "Luxury":
-                st.info(f"💎 **Segmen Pasar:** {predicted_tier} (Hunian Menengah Atas / Mewah)")
+                st.info(f"**Segmen Pasar:** {predicted_tier} (Hunian Menengah Atas / Mewah)")
             elif predicted_tier == "Mid-Market":
-                st.info(f"🏡 **Segmen Pasar:** {predicted_tier} (Pasar Properti Menengah)")
+                st.info(f"**Segmen Pasar:** {predicted_tier} (Pasar Properti Menengah)")
             else:
-                st.info(f"🏢 **Segmen Pasar:** {predicted_tier} (Hunian Terjangkau / Entry-Level)")
+                st.info(f"**Segmen Pasar:** {predicted_tier} (Hunian Terjangkau / Entry-Level)")
                 
-            st.success(f"📍 **Klaster Geospasial K-Means (k=6):** Klaster {cluster_id} — {cluster_name}")
+            st.success(f"**Klaster Geospasial K-Means (k=6):** Klaster {cluster_id} — {cluster_name}")
 
         # Atribusi Fitur SHAP (Feature Drivers)
         with st.container(border=True):
-            st.markdown("#### 📊 Faktor Pendorong Nilai (SHAP Attribution)")
+            st.markdown("#### Faktor Pendorong Nilai (SHAP Attribution)")
             st.caption("Dekomposisi kontribusi nilai marjinal fitur terhadap rata-rata pasar King County.")
             
             # Kalkulasi empiris aproksimasi SHAP
@@ -210,23 +210,23 @@ def render_valuator(reg_model, clf_model, metadata, zip_coords, all_zipcodes, km
             st.dataframe(df_shap_display, use_container_width=True, hide_index=True)
 
         # Properti Pembanding Terdekat (Comps)
-        with st.expander("🏘️ Lihat Properti Pembanding Terdekat (Empirical Comps 0.8 mi)", expanded=False):
+        with st.expander("Lihat Properti Pembanding Terdekat (Empirical Comps 0.8 mi)", expanded=False):
             comp1, comp2, comp3 = st.columns(3)
             with comp1:
                 with st.container(border=True):
-                    st.caption("✅ 98.4% Match")
+                    st.caption("Kesesuaian: 98.4% Match")
                     st.markdown(f"**Bellevue SE 18th**")
                     st.markdown(f"**${estimated_price * 1.025:,.0f}**")
                     st.caption(f"{bedrooms} KT • {bathrooms} KM • {sqft_living:,} sq.ft")
             with comp2:
                 with st.container(border=True):
-                    st.caption("✅ 96.1% Match")
+                    st.caption("Kesesuaian: 96.1% Match")
                     st.markdown(f"**Medina Border NE**")
                     st.markdown(f"**${estimated_price * 0.985:,.0f}**")
                     st.caption(f"{bedrooms} KT • {bathrooms} KM • {max(500, sqft_living - 150):,} sq.ft")
             with comp3:
                 with st.container(border=True):
-                    st.caption("✅ 94.8% Match")
+                    st.caption("Kesesuaian: 94.8% Match")
                     st.markdown(f"**102nd Ave SE**")
                     st.markdown(f"**${estimated_price * 1.042:,.0f}**")
                     st.caption(f"{bedrooms + 1} KT • {bathrooms} KM • {sqft_living + 200:,} sq.ft")

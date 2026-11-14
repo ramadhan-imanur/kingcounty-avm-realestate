@@ -13,11 +13,11 @@ def render_methodology(metadata=None, kmeans_data=None):
     """
     Merender halaman laporan kualitas dan audit evaluasi model untuk analis dan dewan pakar.
     """
-    st.title("🛡️ Audit Evaluasi Model & Validasi Ekonometrika")
+    st.title("Audit Evaluasi Model & Validasi Ekonometrika")
     st.caption("Laporan kepatuhan standar penilaian massal internasional (IAAO/USPAP), diagnostik residual, dan panduan perbaikan model.")
 
     # Status Banner
-    st.success("✅ **STATUS AUDIT REGULASI: MEMENUHI SYARAT IAAO 2025 & USPAP STANDARD 6**\n\n"
+    st.success("**STATUS AUDIT REGULASI: MEMENUHI SYARAT IAAO 2025 & USPAP STANDARD 6**\n\n"
                "*Model AVM lolos uji reliabilitas statistik, bebas bias sistematis vertikal/horizontal, serta terverifikasi pada 22.847 transaksi King County.*")
 
     # Audit Metadata Strip
@@ -82,7 +82,7 @@ def render_methodology(metadata=None, kmeans_data=None):
         {"Algoritma Model": "ElasticNet", "Paradigma Matematika": "Hybrid L1 + L2 Penalty", "R² (Log)": "0.7460", "RMSE (Log)": "0.2860", "Median MAPE": "22.03%", "MAE ($)": "$124,510", "Status": "Hybrid Regularizer"},
         {"Algoritma Model": "Decision Tree Regressor", "Paradigma Matematika": "Non-Linear Partitioning Tree", "R² (Log)": "0.8168", "RMSE (Log)": "0.2429", "Median MAPE": "17.60%", "MAE ($)": "$98,721", "Status": "Pohon Tunggal"},
         {"Algoritma Model": "Random Forest Regressor", "Paradigma Matematika": "Bootstrap Aggregating (Bagging)", "R² (Log)": "0.8659", "RMSE (Log)": "0.2078", "Median MAPE": "14.34%", "MAE ($)": "$79,588", "Status": "Ensemble Bagging"},
-        {"Algoritma Model": "HistGradientBoosting (Dual-Pipe)", "Paradigma Matematika": "Gradient Boosting (Histogram Binning)", "R² (Log)": "0.8836", "RMSE (Log)": "0.1936", "Median MAPE": "13.55%", "MAE ($)": "$73,452", "Status": "⭐ PRODUKSI UTAMA"}
+        {"Algoritma Model": "HistGradientBoosting (Dual-Pipe)", "Paradigma Matematika": "Gradient Boosting (Histogram Binning)", "R² (Log)": "0.8836", "RMSE (Log)": "0.1936", "Median MAPE": "13.55%", "MAE ($)": "$73,452", "Status": "PRODUKSI UTAMA"}
     ]
     st.dataframe(pd.DataFrame(scorecard_data), hide_index=True, use_container_width=True)
 
@@ -94,17 +94,17 @@ def render_methodology(metadata=None, kmeans_data=None):
 
     diag_c1, diag_c2, diag_c3 = st.columns(3)
     with diag_c1:
-        st.write("##### 📈 Residual vs Fitted")
+        st.write("##### Residual vs Fitted")
         st.metric("Breusch-Pagan p-val", "0.142", "Homoskedastik")
         st.caption("Sebaran kesalahan tersebar konstan dan simetris di sekitar garis residual nol lintas seluruh rentang nilai properti.")
 
     with diag_c2:
-        st.write("##### 🎯 Kurva Akumulasi Galat (CDF)")
+        st.write("##### Kurva Akumulasi Galat (CDF)")
         st.metric("Deviasi ≤ ±10%", "78.4%", "Standar AVM Tinggi")
         st.caption("68.2% estimasi berada di dalam toleransi deviasi ±8.5%, dan 91.4% berada di dalam batas toleransi ketat ±15%.")
 
     with diag_c3:
-        st.write("##### ⚖️ Normalitas Residual (Q-Q)")
+        st.write("##### Normalitas Residual (Q-Q)")
         st.metric("Jarque-Bera p-val", "0.089", "Normal Logaritmik")
         st.caption("Transformasi logaritma natural ln(Price) berhasil menormalkan kemiringan (skewness) harga properti yang tebal di sisi kanan.")
 
@@ -164,7 +164,7 @@ def render_methodology(metadata=None, kmeans_data=None):
         st.dataframe(pd.DataFrame(shap_global), hide_index=True, use_container_width=True)
 
     with spatial_col:
-        st.write("##### 🌐 Dependensi Spasial (Spatial Lag Stability)")
+        st.write("##### Dependensi Spasial (Spatial Lag Stability)")
         st.write("- **Moran's I Residual:** `I = 0.082` *(Turun drastis dari raw price Moran's I = 0.584, menunjukkan model berhasil menyerap mayoritas autokorelasi spasial regional).*")
         st.write("- **5-Fold Cross-Validation Stability:** `R² = 0.881 ± 0.006` *(Variansi performa antar fold sangat stabil tanpa tanda-tanda overfitting spasial).*")
         st.write("- **Generalisasi Strata:** Akurasi prediksi stabil di 98.2% submarket kode pos King County.")
@@ -182,14 +182,14 @@ def render_methodology(metadata=None, kmeans_data=None):
     with rec1:
         st.markdown(
             "#### 1. Stratifikasi Model Khusus Segmen Luxury (> $1.5M)\n"
-            "**Status**: 🚨 *Prioritas Tinggi*\n\n"
+            "**Status**:  *Prioritas Tinggi*\n\n"
             "- **Temuan**: Dispersi residual (COD 8.42%) pada properti di atas $1.5M (Medina, Mercer Island) sedikit melebar karena kelangkaan sampel waterfront dan fitur arsitektur kustom yang tidak tertangkap oleh variabel standar.\n"
             "- **Rekomendasi Tindak Lanjut**: Suntikkan *Two-Stage Hurdle Model* atau *Quantile Regression (P90)* khusus klaster 3, serta tambahkan variabel interaksi non-linear `grade * sqft_waterfront`."
         )
 
         st.markdown(
             "#### 2. Penyempurnaan Spatial Lag Smoothing (SAR / Kriging)\n"
-            "**Status**: ⚡ *Prioritas Sedang*\n\n"
+            "**Status**:  *Prioritas Sedang*\n\n"
             "- **Temuan**: Uji Moran's I masih menunjukkan sisa dependensi spasial minor (`I = 0.082`) di sepanjang koridor transit cepat Light Rail (Seattle – Bellevue).\n"
             "- **Rekomendasi Tindak Lanjut**: Implementasikan *Spatial Autoregressive (SAR) error lag* atau *Gaussian Process Kriging* pada tahap pasca-boosting untuk menekan sisa Moran's I mendekati nol mutlak."
         )
@@ -197,14 +197,14 @@ def render_methodology(metadata=None, kmeans_data=None):
     with rec2:
         st.markdown(
             "#### 3. Bayesian M-Estimate Smoothing pada Kode Pos Pedesaan\n"
-            "**Status**: ⚡ *Prioritas Sedang*\n\n"
+            "**Status**:  *Prioritas Sedang*\n\n"
             "- **Temuan**: Pada area dengan volume transaksi rendah (seperti Enumclaw 98022 dan Vashon 98070), target encoding berpotensi mengalami sedikit pergeseran variansi sampel kecil.\n"
             "- **Rekomendasi Tindak Lanjut**: Tingkatkan bobot prior smoothing Bayesian `m = 35` (dari `m = 20`) untuk mengikat submarket pedesaan lebih kuat ke rata-rata regional King County."
         )
 
         st.markdown(
             "#### 4. Kalibrasi Selang Kepercayaan Konformal (Conformal Prediction)\n"
-            "**Status**: 🔬 *Inovasi Riset*\n\n"
+            "**Status**:  *Inovasi Riset*\n\n"
             "- **Temuan**: Selang keyakinan saat ini mengasumsikan distribusi residual log-normal parametrik yang bisa sedikit kurang sensitif pada ekor distribusi ekstrem.\n"
             "- **Rekomendasi Tindak Lanjut**: Adopsi *Inductive Conformal Prediction (ICP)* untuk memberikan jaminan cakupan matematis 90% yang bebas asumsi distribusi (*distribution-free finite-sample guarantee*)."
         )
@@ -212,7 +212,7 @@ def render_methodology(metadata=None, kmeans_data=None):
     st.divider()
 
     # Data Provenance & Citation Expander
-    with st.expander("📚 Sumber Data, Standar Penilaian, & Sitasi Akademik", expanded=False):
+    with st.expander("Sumber Data, Standar Penilaian, & Sitasi Akademik", expanded=False):
         st.markdown("""
         - **Sumber Data Primer:** King County Department of Assessments & University of Washington (*Harvard Dataverse*).
         - **Standar Audit:** *International Association of Assessing Officers (IAAO)* Standard on Mass Appraisal of Real Property (2025).

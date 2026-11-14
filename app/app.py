@@ -31,7 +31,6 @@ from views import (
 # 1. Konfigurasi Halaman Ringan & Injeksi Styling Minimal
 st.set_page_config(
     page_title="KingCounty-AVM | Valuasi Properti & Analisis Spasial",
-    page_icon="🏡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -43,16 +42,16 @@ kmeans_data = load_kmeans_data()
 clean_df = load_clean_data_sample()
 zip_coords, all_zipcodes = get_zip_coordinates(clean_df)
 
-# 3. Sidebar Navigasi Bersih & Ringan
+# 3. Sidebar Navigasi Bersih & Ringan (Bebas Emoticon)
 with st.sidebar:
-    st.markdown("### 🏡 KingCounty-AVM")
+    st.markdown("### KingCounty-AVM")
     st.caption("Sistem Valuasi Cerdas Properti & Riset Spasial")
     st.markdown("---")
     
-    NAV_VALUATOR = "🏠 Kalkulator Nilai (Smart Valuator)"
-    NAV_EXPLORER = "🧭 Jelajah Pasar (Market Explorer)"
-    NAV_SIMULATOR = "📈 Simulasi Renovasi (Renovation ROI)"
-    NAV_AUDIT = "🛡️ Kualitas & Audit (Model Audit Report)"
+    NAV_VALUATOR = "Kalkulator Nilai (Smart Valuator)"
+    NAV_EXPLORER = "Jelajah Pasar (Market Explorer)"
+    NAV_SIMULATOR = "Simulasi Renovasi (Renovation ROI)"
+    NAV_AUDIT = "Kualitas & Audit (Model Audit Report)"
     
     app_mode = st.radio(
         "Menu Navigasi Utama:",
@@ -65,7 +64,7 @@ with st.sidebar:
     with st.container(border=True):
         st.markdown("**Status Integritas Model**")
         st.caption("Standar Akreditasi IAAO/USPAP 2025")
-        st.markdown("- **Status:** ✅ Lolos (COD 7.14%)")
+        st.markdown("- **Status:** Lolos Audit IAAO (COD 7.14%)")
         st.markdown("- **Model:** Dual-Pipeline v4.2")
         st.markdown("- **Akurasi R²:** `0.8836` (MAPE 11.4%)")
         st.markdown("- **Segmentasi:** `k = 6` Mikromarket")
