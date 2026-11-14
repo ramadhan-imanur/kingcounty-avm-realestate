@@ -132,13 +132,24 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Launch the application
+### 2. Launch the applications
 
+#### Streamlit Desktop App
 ```bash
 streamlit run app/app.py
 ```
-
 The interface opens at `http://localhost:8501`.
+
+#### Modern Aeris Web Dashboard (SPA)
+Open `web/index.html` directly in your browser, or serve it locally:
+```bash
+python3 -m http.server 8000 -d web
+```
+The interface opens at `http://localhost:8000`. Features:
+- **Smart Valuator:** Instant AVM property valuation with SHAP attribution bars.
+- **Market Explorer:** Spatial visualization across King County micro-markets.
+- **Renovation Simulator:** Real-time ROI and value-add equity calculator.
+- **Quality & Audit Report:** Comprehensive IAAO/USPAP compliance and 7-model econometric scorecard.
 
 ### 3. Reproduce data pipeline and training
 
