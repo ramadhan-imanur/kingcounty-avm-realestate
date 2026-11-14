@@ -56,14 +56,14 @@
     "Random Forest Regressor": {
       "R2_log": 0.8659,
       "RMSE_log": 0.2078,
-      "MAPE": 14.33,
-      "MAE_dollars": 79623.0
+      "MAPE": 14.34,
+      "MAE_dollars": 79588.0
     },
     "HistGradientBoosting Regressor": {
-      "R2_log": 0.8848,
-      "RMSE_log": 0.1926,
-      "MAPE": 13.39,
-      "MAE_dollars": 72329.0
+      "R2_log": 0.8836,
+      "RMSE_log": 0.1936,
+      "MAPE": 13.55,
+      "MAE_dollars": 73452.0
     }
   },
   "metrics_classification": {
@@ -85,70 +85,159 @@
       }
     }
   },
+  "unsupervised_learning": {
+    "algorithm": "K-Means Clustering",
+    "n_clusters": 6,
+    "features": [
+      "Latitude",
+      "Longitude",
+      "LogPrice"
+    ],
+    "metrics": {
+      "inertia": 19691.06194817513,
+      "silhouette": 0.3120229593034242,
+      "calinski_harabasz": 11215.171181564554,
+      "davies_bouldin": 1.0748212298660507
+    },
+    "cluster_profiles": [
+      {
+        "cluster_id": 5,
+        "archetype": "Southwest Corridor (Affordable Urban / Tukwila-Burien)",
+        "property_count": 3930,
+        "market_share_pct": 17.28,
+        "median_price": 270000.0,
+        "mean_price": 280264.58524173027,
+        "median_sqft_living": 1560.0,
+        "median_grade": 7.0,
+        "centroid_lat": 47.4427,
+        "centroid_lon": -122.31974
+      },
+      {
+        "cluster_id": 0,
+        "archetype": "Southeast Valley Suburban (Kent-Auburn-Renton)",
+        "property_count": 3754,
+        "market_share_pct": 16.5,
+        "median_price": 305050.0,
+        "mean_price": 319159.1113478956,
+        "median_sqft_living": 1940.0,
+        "median_grade": 7.0,
+        "centroid_lat": 47.37093,
+        "centroid_lon": -122.13482
+      },
+      {
+        "cluster_id": 4,
+        "archetype": "East Foothills & Rural Acreage (Snoqualmie-Enumclaw)",
+        "property_count": 907,
+        "market_share_pct": 3.99,
+        "median_price": 440000.0,
+        "mean_price": 454317.79713340686,
+        "median_sqft_living": 2210.0,
+        "median_grade": 8.0,
+        "centroid_lat": 47.53217,
+        "centroid_lon": -121.84115
+      },
+      {
+        "cluster_id": 2,
+        "archetype": "North Seattle Metro Urban Core (City Core-Shoreline)",
+        "property_count": 6644,
+        "market_share_pct": 29.21,
+        "median_price": 465000.0,
+        "mean_price": 482863.1184527393,
+        "median_sqft_living": 1620.0,
+        "median_grade": 7.0,
+        "centroid_lat": 47.6747,
+        "centroid_lon": -122.31985
+      },
+      {
+        "cluster_id": 1,
+        "archetype": "Eastside Suburban Tech Corridor (Redmond-Sammamish-Kirkland)",
+        "property_count": 4819,
+        "market_share_pct": 21.18,
+        "median_price": 612500.0,
+        "mean_price": 639650.7545133845,
+        "median_sqft_living": 2480.0,
+        "median_grade": 8.0,
+        "centroid_lat": 47.62104,
+        "centroid_lon": -122.08914
+      },
+      {
+        "cluster_id": 3,
+        "archetype": "West Bellevue & Lakefront Luxury Prestige (Medina-Mercer Island)",
+        "property_count": 2694,
+        "market_share_pct": 11.84,
+        "median_price": 1080000.0,
+        "mean_price": 1310439.6648106903,
+        "median_sqft_living": 3110.0,
+        "median_grade": 9.0,
+        "centroid_lat": 47.61824,
+        "centroid_lon": -122.26482
+      }
+    ]
+  },
   "feature_importance_ranked": [
     [
       "Latitude",
-      0.65661
+      0.65532
     ],
     [
       "SqFtTotLiving",
-      0.18491
+      0.18012
     ],
     [
       "BldgGrade",
-      0.15908
+      0.17411
     ],
     [
       "Longitude",
-      0.09287
+      0.08927
     ],
     [
       "SqFtLot",
-      0.04871
+      0.04707
     ],
     [
       "PropertyAge",
-      0.01916
+      0.01791
     ],
     [
       "HasView",
-      0.01685
+      0.01726
     ],
     [
       "IsWaterfront",
-      0.01674
+      0.01658
     ],
     [
       "Condition",
-      0.01289
-    ],
-    [
-      "TrafficNoise",
-      0.00386
+      0.01339
     ],
     [
       "TotalBaths",
-      0.00358
+      0.00392
     ],
     [
       "SqFtTotBasement",
-      0.00323
+      0.00359
     ],
     [
-      "IsRenovated",
-      0.00182
+      "TrafficNoise",
+      0.00325
     ],
     [
       "SqFtGarageAttached",
-      0.00145
+      0.00196
+    ],
+    [
+      "IsRenovated",
+      0.00194
     ],
     [
       "Stories",
-      0.00108
+      0.00059
     ],
     [
       "Bedrooms",
-      0.00039
+      0.00045
     ],
     [
       "AirportNoise",

@@ -17,19 +17,6 @@
 
 ---
 
-### 👥 Distribusi Peran & Tanggung Jawab Tim (Team RACI Matrix)
-
-| No | Nama Anggota | Peran Utama Proyek | Fokus Tanggung Jawab Fungsional |
-| :-: | :--- | :--- | :--- |
-| 1 | **Ramadhan Imanur Rochim** | *Project Lead & Full-Stack Data Scientist* | Koordinasi arsitektur sistem, orkestrasi PRD, integrasi model inferensi ke aplikasi web Streamlit, dan penjaminan mutu end-to-end. |
-| 2 | **Thalita Anindya Ramadani** | *Data Profiling & Spatial EDA Specialist* | Eksplorasi statistik korpus 22.847 transaksi x 147 kolom (`01_eda.ipynb`), analisis distribusi *heavy-tailed* harga jual, dan pemetaan korelasi spasial koordinat (`X`, `Y`). |
-| 3 | **Amdadur Rohman** | *Data Cleaning & Feature Engineering Engineer* | Pembersihan *trailing whitespaces*, reduksi dimensi dari 147 kolom menjadi fitur prediktor esensial, parsing tanggal transaksi (`DocumentDate`), dan rekayasa fitur usia bangunan serta rasio luas. |
-| 4 | **Hanifah Qurratul 'Aini** | *Machine Learning Engineer (Hedonic Regression)* | Pengembangan model regresi harga properti (`SalePrice` / $\log(\text{SalePrice})$): Linear, Ridge, Random Forest, XGBoost/LightGBM, dan optimasi $R^2$ / RMSE. |
-| 5 | **Dyandra Rizky Aulia** | *Machine Learning Engineer (Classification & Valuation)* | Pengembangan model klasifikasi tier pasar properti (*Entry-level*, *Mid-tier*, *Luxury*) serta deteksi properti *under-assessed / undervalued* berbasis rasio pajak (`ImpsVal + LandVal`). |
-| 6 | **Alysia Putri Pradita** | *UI/UX & Web Application Specialist* | Desain tata letak antarmuka Streamlit (`app/app.py`), pembangunan form kalkulator valuasi properti, peta interaktif sebaran harga, dan visualisasi *Explainable AI* (SHAP). |
-
----
-
 ## 1. Ringkasan Eksekutif & Latar Belakang (Executive Summary & Context)
 
 > **Standar Industri:** Bagian ini memberikan gambaran ringkas (*elevator pitch*) kepada eksekutif dan pemangku kepentingan mengenai masalah nyata yang dihadapi dan solusi berbasis data yang akan dikembangkan.
