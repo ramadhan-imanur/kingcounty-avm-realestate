@@ -12,9 +12,9 @@ export function renderSidebar() {
 
   const navItems = [
     { id: 'estimator', label: 'Kalkulator Nilai', icon: iconHome },
-    { id: 'map', label: 'Jelajah Spasial', icon: iconMap },
-    { id: 'analytics', label: 'Analisis Pasar & Audit', icon: iconAnalytics },
-    { id: 'simulator', label: 'Simulasi Investasi', icon: iconSimulator }
+    { id: 'map', label: 'Jelajah Pasar', icon: iconMap },
+    { id: 'simulator', label: 'Simulasi Renovasi', icon: iconSimulator },
+    { id: 'analytics', label: 'Kualitas & Audit', icon: iconAnalytics }
   ];
 
   aside.innerHTML = `
@@ -36,37 +36,49 @@ export function renderSidebar() {
       </nav>
     </div>
 
-    <!-- Governance Status Box -->
-    <div class="glass-card border border-emerald-600/20 p-3 mt-4 text-xs font-mono flex flex-col gap-1">
-      <div class="text-[10px] font-bold text-emerald-800 uppercase flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-        <span>IAAO Audit Pass</span>
+    <!-- Institutional Governance Card (Stitch High-Fidelity) -->
+    <div class="rounded-2xl bg-[#064e3b] text-white p-3.5 mt-4 flex flex-col gap-2 shadow-lg shadow-emerald-950/20 border border-emerald-500/20">
+      <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-300">
+        <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>IAAO AUDIT PASS</span>
       </div>
-      <div class="text-slate-600 text-[11px]">COD: <b>7.14%</b> • R²: <b>0.8836</b></div>
-      <div class="text-[10px] text-slate-400 mt-1">King County Dual-Pipe v4.2</div>
+      <p class="text-[11px] text-emerald-100/80 leading-relaxed font-sans">
+        Model dievaluasi berkala menggunakan validasi silang bertingkat (Stratified 5-Fold) & standar penilaian AVM internasional.
+      </p>
+      <div class="pt-2 border-t border-emerald-700/50 flex flex-col gap-1 font-mono text-[10px]">
+        <div class="flex justify-between">
+          <span class="text-emerald-300/80">Test MAPE:</span>
+          <span class="font-bold text-white">11.4% (R² 0.89)</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-emerald-300/80">Klaster Geo:</span>
+          <span class="font-bold text-white">k = 6 Mikromarket</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-emerald-300/80">Coverage:</span>
+          <span class="font-bold text-white">King County, WA</span>
+        </div>
+      </div>
     </div>
   `;
 
-  // Function to highlight active tab
   function updateActive(activeTab) {
     aside.querySelectorAll('.nav-btn').forEach(btn => {
       const isTarget = btn.dataset.tab === activeTab;
       if (isTarget) {
-        btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-md shadow-emerald-700/20 text-left transition-all';
+        btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold bg-[#064e3b] text-white shadow-md shadow-emerald-950/25 text-left transition-all';
       } else {
         btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-white/60 text-left transition-all';
       }
     });
   }
 
-  // Click handlers
   aside.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       appStore.setState({ activeTab: btn.dataset.tab });
     });
   });
 
-  // Close button handler
   const closeBtn = aside.querySelector('#sidebar-close-btn');
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
@@ -77,7 +89,6 @@ export function renderSidebar() {
     });
   }
 
-  // Subscribe to state changes
   appStore.subscribe('activeTab', (newTab) => {
     updateActive(newTab);
   });
