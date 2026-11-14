@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const view = views[tabId] || views.estimator;
     mainViewport.appendChild(view);
     mainViewport.scrollTop = 0;
+    if (typeof view.onMount === 'function') {
+      setTimeout(() => view.onMount(), 50);
+    }
   }
 
   // Subscribe to navigation events

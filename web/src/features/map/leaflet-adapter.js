@@ -4,13 +4,19 @@
  */
 
 export class LeafletAdapter {
-  constructor(elementId, center = [47.5480, -122.18], zoom = 10) {
+  constructor(target, center = [47.5480, -122.18], zoom = 10) {
     if (typeof L === 'undefined') {
       console.warn('Leaflet is not loaded on window.');
       return;
     }
 
-    this.map = L.map(elementId, {
+    const el = typeof target === 'string' ? document.getElementById(target) : target;
+    if (!el) {
+      console.warn('LeafletAdapter: target element not found in DOM.');
+      return;
+    }
+
+    this.map = L.map(el, {
       center,
       zoom,
       minZoom: 9,
@@ -19,7 +25,6 @@ export class LeafletAdapter {
       scrollWheelZoom: true
     });
 
-    // Sleek CartoDB Positron Cartography
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO',
       subdomains: 'abcd',
@@ -33,7 +38,7 @@ export class LeafletAdapter {
 
   invalidateSize() {
     if (this.map) {
-      setTimeout(() => this.map.invalidateSize(), 50);
+      setTimeout(() => this.map.invalidateSize(), 80);
     }
   }
 
@@ -44,11 +49,11 @@ export class LeafletAdapter {
   }
 
   clearSubmarkets() {
-    this.submarketLayer.clearLayers();
+    if (this.submarketLayer) this.submarketLayer.clearLayers();
   }
 
   clearComps() {
-    this.compsLayer.clearLayers();
-    this.radiusLayer.clearLayers();
+    if (this.compsLayer) this.compsLayer.clearLayers();
+    if (this.radiusLayer) this.radiusLayer.clearLayers();
   }
 }

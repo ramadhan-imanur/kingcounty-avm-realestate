@@ -90,6 +90,7 @@ export function renderMapView() {
 
   function updateSubmarketTable(filtered) {
     const tbody = container.querySelector('#submarket-tbody');
+    if (!tbody) return;
     tbody.innerHTML = filtered.map(z => `
       <tr class="hover:bg-slate-100/70 cursor-pointer transition-colors" data-zip="${z.code}">
         <td class="py-1.5 font-sans font-medium text-slate-800">${z.name.split(' ')[0]} <span class="text-[10px] text-slate-400">(${z.code})</span></td>
@@ -109,16 +110,30 @@ export function renderMapView() {
   }
 
   function refreshLayers() {
-    if (!mapAdapter) return;
     const currentProp = appStore.getState().property;
     const filtered = currentTier === 'all' ? allZipcodes : allZipcodes.filter(z => z.tier === currentTier);
-    LayerManager.renderSubmarkets(mapAdapter, filtered, currentProp.zipcode, selectLocation);
+    if (mapAdapter) {
+      LayerManager.renderSubmarkets(mapAdapter, filtered, currentProp.zipcode, selectLocation);
+      const comps = findComparableProperties(currentProp);
+      LayerManager.renderComps(mapAdapter, currentProp.lat, currentProp.lon, comps, 2.5);
+    }
     const comps = findComparableProperties(currentProp);
-    LayerManager.renderComps(mapAdapter, currentProp.lat, currentProp.lon, comps, 2.5);
     container.querySelector('#comps-table-mount').innerHTML = renderCompsTable(comps);
     updateSubmarketTable(filtered);
   }
 
+  function initMap() {
+    const canvas = container.querySelector('#leaflet-map-canvas');
+    if (!canvas || !document.body.contains(canvas)) return;
+    if (!mapAdapter && typeof L !== 'undefined') {
+      const prop = appStore.getState().property;
+      mapAdapter = new LeafletAdapter(canvas, [prop.lat, prop.lon], 10);
+      refreshLayers();
+    }
+    if (mapAdapter) mapAdapter.invalidateSize();
+  }
+
+  container.onMount = initMap;
   container.querySelectorAll('#map-tier-filters button').forEach(btn => {
     btn.addEventListener('click', () => {
       container.querySelectorAll('#map-tier-filters button').forEach(b => b.className = 'px-2 py-0.5 text-[11px] font-medium rounded-md text-slate-600 hover:text-slate-900 cursor-pointer');
@@ -128,15 +143,7 @@ export function renderMapView() {
     });
   });
 
-  setTimeout(() => {
-    const canvas = container.querySelector('#leaflet-map-canvas');
-    if (canvas && !mapAdapter) {
-      const prop = appStore.getState().property;
-      mapAdapter = new LeafletAdapter('leaflet-map-canvas', [prop.lat, prop.lon], 10);
-      refreshLayers();
-      mapAdapter.invalidateSize();
-    }
-  }, 100);
-
+  refreshLayers();
+  setTimeout(initMap, 150);
   return container;
 }
