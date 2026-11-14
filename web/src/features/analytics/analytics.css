@@ -1,0 +1,15 @@
+/**
+ * KingCounty-AVM: Analytics & Audit Feature Stylesheet
+ */
+
+.analytics-view table {
+  font-variant-numeric: tabular-nums;
+}
+
+.analytics-view th {
+  letter-spacing: 0.05em;
+}
+
+.analytics-view .scorecard-row-active {
+  background-color: rgba(16, 185, 129, 0.08);
+}

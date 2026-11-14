@@ -1,0 +1,24 @@
+/**
+ * KingCounty-AVM: Estimator Feature Stylesheet
+ */
+
+.estimator-view select,
+.estimator-view input[type="number"] {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.estimator-view select:focus,
+.estimator-view input[type="number"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 105, 72, 0.15);
+}
+
+.estimator-confidence-track {
+  height: 8px;
+  background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+  border-radius: var(--radius-full);
+  position: relative;
+}
